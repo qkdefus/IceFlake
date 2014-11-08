@@ -303,5 +303,71 @@
         }
 
         #endregion
+
+        // 3.3.5a: 12340 // qk
+        internal enum PositionPointers
+        {
+            UNIT_X = 0x798,
+            UNIT_Y = UNIT_X + 0x4,
+            UNIT_Z = UNIT_X + 0x8,
+            UNIT_R = UNIT_X + 0x10,
+            UNIT_P = UNIT_X + 0x14,
+
+            UNIT_SPEED = 0x814,
+            UNIT_MAXSPEED = UNIT_SPEED + 0x8,
+
+            MOVEMENT_FIELD = 0xd8,
+
+            OBJECT_X = 0xe8,
+            OBJECT_Y = OBJECT_X + 0x4,
+            OBJECT_Z = OBJECT_X + 0x8,
+        }
+
+        // 3.3.5a: 12340 // qk
+        internal enum MouseClick
+        {
+            posX = 0x00CA1264,
+            posY = posX + 4,
+            posZ = posX + 8,
+        }
+
+        // 3.3.5a: 12340 // qk
+        internal enum CTM
+        {
+            Base = 0xCA11E4,
+            posX = Base + 0x80,
+            posY = Base + 0x84,
+            posZ = Base + 0x88,
+            State = Base + 0x10,
+        };
+
+        // 3.3.5a: 12340 // qk
+        internal enum ToggleAutoLoot
+        {
+            Pointer = 0xbd0914,
+            Offset = 0x30
+        }
+
+        // 3.3.5a: 12340 // qk
+        internal enum ToggleCtm
+        {
+            Pointer = 0xbd08f4,
+            Offset = 0x30
+        }
+
+        // 3.3.5a: 12340 // qk
+        internal enum ToggleSelfCast
+        {
+            Pointer = 0xbd0920,
+            Offset = 0x30
+        }
+
+        // 3.3.5a: 12340 // qk
+        internal enum ToggleRenderTerrain
+        {
+            Pointer = 0xcd774c,
+            Offset = 0xc5df7c,
+            Default_Value = 0x1f104f73,
+        }
     }
 }

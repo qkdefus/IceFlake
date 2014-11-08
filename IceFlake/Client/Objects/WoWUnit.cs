@@ -60,6 +60,95 @@ namespace IceFlake.Client.Objects
             _auras = new AuraCollection(this);
         }
 
+        /// <summary>
+        /// Returns the object's Rotation.
+        /// </summary>
+        public virtual float R
+        {
+            get
+            {
+                try
+                {
+                    return Manager.Memory.Read<float>(new IntPtr((uint)Pointer + (uint)Pointers.PositionPointers.UNIT_R));
+                }
+                catch { }
+                return 0f;
+            }
+        }
+
+        /// <summary>
+        /// Returns the object's Pitch.
+        /// </summary>
+        /// 
+        public virtual float P
+        {
+            get
+            {
+                try
+                {
+                    return Manager.Memory.Read<float>(new IntPtr((uint)Pointer + (uint)Pointers.PositionPointers.UNIT_P));
+                }
+                catch { }
+                return 0f;
+            }
+        }
+
+        /// <summary>
+        /// Return Unit MovementField
+        /// </summary>
+        public uint MovementField
+        {
+            get
+            {
+                try
+                {
+                    return Manager.Memory.Read<uint>(new IntPtr((uint)Pointer + (uint)Pointers.PositionPointers.MOVEMENT_FIELD));
+                }
+                catch { }
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Return Unit Speed
+        /// </summary>
+        public float Speed
+        {
+            get
+            {
+                try
+                {
+                    return Manager.Memory.Read<float>(new IntPtr((uint)Pointer + (uint)Pointers.PositionPointers.UNIT_SPEED));
+                }
+                catch { }
+                return 0f;
+            }
+        }
+
+        /// <summary>
+        /// Returns True if unit is moving, else False. by reading UNIT_SPEED
+        /// </summary>
+        public bool IsMoving
+        {
+            get
+            {
+                return (Speed > 0f);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public UnitReaction Reaction
         {
             get

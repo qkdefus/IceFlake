@@ -35,11 +35,26 @@
   <PropertyGroup>
     <StartupObject>IceFlake.EntryPoint</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Lab.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MeshGenLib">
       <HintPath>..\MeshGenLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <HintPath>..\Resources\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics">
+      <HintPath>..\Resources\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\SlimDX.dll</HintPath>
+    </Reference>
+    <Reference Include="Squid">
+      <HintPath>..\Resources\Squid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -68,9 +83,6 @@
     <Compile Include="Client\API\TradeSkill.cs" />
     <Compile Include="Client\API\Trainer.cs" />
     <Compile Include="Client\CDataStore.cs" />
-    <Compile Include="Client\Pather.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Client\Routines\Combat\HarmfulSpellRoutine.cs" />
     <Compile Include="Client\Routines\Combat\HelpfulSpellRoutine.cs" />
     <Compile Include="Client\Routines\Combat\SpellRoutine.cs" />
@@ -148,12 +160,12 @@
     <Compile Include="Scripts\DumpersScripts.cs" />
     <Compile Include="Scripts\FishingScript.cs" />
     <Compile Include="Scripts\GuildRecruitScript.cs" />
-    <Compile Include="Scripts\HackScripts.cs" />
     <Compile Include="Scripts\LoginScript.cs" />
     <Compile Include="Scripts\RoutineScript.cs" />
     <Compile Include="Scripts\TalentScript.cs" />
     <Compile Include="Scripts\UITestScript.cs" />
     <Compile Include="Scripts\VendorScript.cs" />
+    <Compile Include="Scripts\_QKHackScripts.cs" />
     <EmbeddedResource Include="IceForm.resx">
       <DependentUpon>IceForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -251,7 +263,9 @@
   <ItemGroup>
     <None Include="Resources\Icons\report.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Lab.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
