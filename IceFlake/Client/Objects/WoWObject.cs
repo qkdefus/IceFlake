@@ -6,15 +6,11 @@ namespace IceFlake.Client.Objects
 {
     public class WoWObject
     {
-        #region Typedefs & Delegates
-
         private static SelectObjectDelegate _selectObject;
         private readonly GetObjectFacingDelegate _getObjectFacing;
         private readonly GetObjectLocationDelegate _getObjectLocation;
         private readonly GetObjectNameDelegate _getObjectName;
         private readonly InteractDelegate _interact;
-
-        #endregion
 
         public WoWObject(IntPtr pointer)
         {
@@ -22,11 +18,11 @@ namespace IceFlake.Client.Objects
 
             if (IsValid)
             {
-                _getObjectName = RegisterVirtualFunction<GetObjectNameDelegate>(Pointers.Object.GetObjectName);
+                _getObjectName = RegisterVirtualFunction<GetObjectNameDelegate>(Pointers.Object.GetObjectName * 4);
                 _getObjectLocation =
-                    RegisterVirtualFunction<GetObjectLocationDelegate>(Pointers.Object.GetObjectLocation);
-                _getObjectFacing = RegisterVirtualFunction<GetObjectFacingDelegate>(Pointers.Object.GetObjectFacing);
-                _interact = RegisterVirtualFunction<InteractDelegate>(Pointers.Object.Interact);
+                    RegisterVirtualFunction<GetObjectLocationDelegate>(Pointers.Object.GetObjectLocation * 4);
+                _getObjectFacing = RegisterVirtualFunction<GetObjectFacingDelegate>(Pointers.Object.GetObjectFacing * 4);
+                _interact = RegisterVirtualFunction<InteractDelegate>(Pointers.Object.Interact * 4);
             }
         }
 
@@ -35,6 +31,14 @@ namespace IceFlake.Client.Objects
         public bool IsValid
         {
             get { return Pointer != IntPtr.Zero; }
+        }
+
+        public uint StorageField // qk
+        {
+            get
+            {
+                return Manager.Memory.Read<uint>(Pointer + 0x8);
+            }
         }
 
         public string Name
@@ -71,14 +75,14 @@ namespace IceFlake.Client.Objects
         {
             get
             {
-                Location result;
-                return (WoWWorld.LineOfSightTest(Location, Manager.ObjectManager.LocalPlayer.Location) & 0xFF) == 0;
+                return World.LineOfSightTest(Location, Manager.ObjectManager.LocalPlayer.Location) ==
+                       TracelineResult.NoCollision;
             }
         }
 
         public WoWObjectType Type
         {
-            get { return (WoWObjectType) GetDescriptor<uint>(WoWObjectFields.OBJECT_FIELD_TYPE); }
+            get { return (WoWObjectType)GetDescriptor<uint>(WoWObjectFields.OBJECT_FIELD_TYPE); }
         }
 
         public ulong Guid
@@ -98,7 +102,7 @@ namespace IceFlake.Client.Objects
                 WoWLocalPlayer local = Manager.ObjectManager.LocalPlayer;
                 if (local == null || !local.IsValid)
                     return float.NaN;
-                return (float) local.Location.DistanceTo(Location);
+                return (float)local.Location.DistanceTo(Location);
             }
         }
 
@@ -139,7 +143,7 @@ namespace IceFlake.Client.Objects
 
         protected T RegisterVirtualFunction<T>(uint offset) where T : class
         {
-            IntPtr pointer = Manager.Memory.GetObjectVtableFunction(Pointer, offset);
+            IntPtr pointer = Manager.Memory.GetObjectVtableFunction(Pointer, offset / 4);
             if (pointer == IntPtr.Zero)
                 return null;
             return Manager.Memory.RegisterDelegate<T>(pointer);
@@ -149,7 +153,7 @@ namespace IceFlake.Client.Objects
         {
             if (_selectObject == null)
                 _selectObject =
-                    Manager.Memory.RegisterDelegate<SelectObjectDelegate>((IntPtr) Pointers.Object.SelectObject);
+                    Manager.Memory.RegisterDelegate<SelectObjectDelegate>((IntPtr)Pointers.Object.SelectObject);
 
             _selectObject(Guid);
         }
@@ -165,36 +169,46 @@ namespace IceFlake.Client.Objects
             Manager.LocalPlayer.LookAt(Location);
         }
 
-        internal T GetDescriptor<T>(Enum idx) where T : struct
+        //protected unsafe T GetDescriptor<T>(int offset)
+        //{
+        //    uint descriptorArray = *(uint*)(Pointer + Offsets.DescriptorOffset);
+        //    int size = Marshal.SizeOf(typeof(T));
+        //    object ret = null;
+        //    switch (size)
+        //    {
+        //        case 1:
+        //            ret = *(byte*)(descriptorArray + offset);
+        //            break;
+
+        //        case 2:
+        //            ret = *(short*)(descriptorArray + offset);
+        //            break;
+
+        //        case 4:
+        //            ret = *(uint*)(descriptorArray + offset);
+        //            break;
+
+        //        case 8:
+        //            ret = *(ulong*)(descriptorArray + offset);
+        //            break;
+        //    }
+        //    return (T)ret;
+        //}
+
+        protected T GetDescriptor<T>(Enum idx) where T : struct
         {
             return GetDescriptor<T>(Convert.ToInt32(idx));
         }
 
-        internal T GetDescriptor<T>(int idx) where T : struct
+        protected T GetDescriptor<T>(int idx) where T : struct
         {
-            return GetAbsoluteDescriptor<T>(idx*0x4);
+            return GetAbsoluteDescriptor<T>(idx * 0x4);
         }
 
-        internal T GetAbsoluteDescriptor<T>(int offset) where T : struct
+        protected T GetAbsoluteDescriptor<T>(int offset) where T : struct
         {
             var descriptorArray = Manager.Memory.Read<uint>(new IntPtr(Pointer.ToInt64() + 0x8));
             return Manager.Memory.Read<T>(new IntPtr(descriptorArray + offset));
-        }
-
-        internal void SetDescriptor<T>(Enum idx, T value) where T : struct
-        {
-            SetDescriptor(Convert.ToInt32(idx), value);
-        }
-
-        internal void SetDescriptor<T>(int idx, T value) where T : struct
-        {
-            SetAbsoluteDescriptor(idx*0x4, value);
-        }
-
-        internal void SetAbsoluteDescriptor<T>(int offset, T value) where T : struct
-        {
-            var descriptorArray = Manager.Memory.Read<uint>(new IntPtr(Pointer.ToInt64() + 0x8));
-            Manager.Memory.Write(new IntPtr(descriptorArray + offset), value);
         }
 
         protected bool HasFlag(Enum idx, Enum flag)
@@ -205,7 +219,7 @@ namespace IceFlake.Client.Objects
 
         public override string ToString()
         {
-            return "[\"" + Name + "\", Distance = " + (int) Distance + ", Type = " + Type + "]";
+            return "[\"" + Name + "\", Distance = " + (int)Distance + ", Type = " + Type + "]";
         }
 
         public static implicit operator IntPtr(WoWObject obj)

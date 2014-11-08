@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using IceFlake.Client.Patchables;
-using IceFlake.Runtime;
 
 namespace IceFlake.Client
 {
@@ -31,7 +30,8 @@ namespace IceFlake.Client
 
         public static void ResetHardwareAction()
         {
-            Manager.Memory.Write(Pointers.Other.LastHardwareAction.ToPointer(), PerformanceCount);
+            Manager.Memory.Write(Manager.Memory.GetAbsolute((IntPtr)Pointers.Other.LastHardwareAction),
+                                 PerformanceCount);
         }
 
         private static void SetInCombat(string ev, List<string> args)
@@ -44,26 +44,13 @@ namespace IceFlake.Client
             InCombat = false;
         }
 
-        public static string ToWowCurrency(this ulong amount)
-        {
-            return String.Format("{0}g {1}s {2}c", amount / 10000, amount / 100 % 100, amount % 100);
-        }
-
-        // https://github.com/tomrus88/WowAddin/blob/master/WowAddin/dllmain.cpp#L34
-        // Fix InvalidPtrCheck for callbacks outside of .text section
-        public static void FixInvalidPtrCheck()
-        {
-            Manager.Memory.Write<uint>(Pointers.Console.InvalidPtrCheck.ToPointer(), 0x00000001);
-            Manager.Memory.Write<uint>(Pointers.Console.InvalidPtrCheck.ToPointer() + 0x4, 0x7FFFFFFF);
-        }
-
         #region Properties
 
         public static bool InCombat { get; private set; }
 
         #endregion
 
-        #region Typedefs & Delegates
+        #region Nested type: PerformanceCounterDelegate
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate uint PerformanceCounterDelegate();

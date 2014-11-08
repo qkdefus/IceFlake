@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using IceFlake.DirectX;
 
 namespace IceFlake.Client.Patchables
 {
@@ -978,6 +979,25 @@ namespace IceFlake.Client.Patchables
         public int FieldsCount;
         public int RecordSize;
         public int StringTableSize;
+    }
+
+    #endregion
+
+    #region Camera
+
+    public unsafe struct CameraInfo
+    {
+        private fixed int unk0[2];
+        #if SLIMDX
+        public SlimDX.Vector3 Position;
+        #else
+        public Vector3 Position;
+        #endif
+        public fixed float Facing[9];
+        public float NearPlane;
+        public float FarPlane;
+        public float FieldOfView;
+        public float Aspect;
     }
 
     #endregion

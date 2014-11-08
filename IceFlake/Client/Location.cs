@@ -2,12 +2,9 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
-#if SLIMDX
 using SlimDX;
-#else
-using IceFlake.DirectX;
 
-#endif
+//using Microsoft.Xna.Framework;
 
 namespace IceFlake.Client
 {
@@ -28,8 +25,8 @@ namespace IceFlake.Client
 
         public Location(XElement xml)
             : this(Convert.ToSingle(xml.Attribute("X").Value, CultureInfo.InvariantCulture),
-                Convert.ToSingle(xml.Attribute("Y").Value, CultureInfo.InvariantCulture),
-                Convert.ToSingle(xml.Attribute("Z").Value, CultureInfo.InvariantCulture))
+                   Convert.ToSingle(xml.Attribute("Y").Value, CultureInfo.InvariantCulture),
+                   Convert.ToSingle(xml.Attribute("Z").Value, CultureInfo.InvariantCulture))
         {
         }
 
@@ -133,9 +130,9 @@ namespace IceFlake.Client
 
         public Blackspot(XElement xml)
             : this(Convert.ToSingle(xml.Attribute("X").Value, CultureInfo.InvariantCulture),
-                Convert.ToSingle(xml.Attribute("Y").Value, CultureInfo.InvariantCulture),
-                Convert.ToSingle(xml.Attribute("Z").Value, CultureInfo.InvariantCulture),
-                Convert.ToSingle(xml.Attribute("Radius").Value, CultureInfo.InvariantCulture))
+                   Convert.ToSingle(xml.Attribute("Y").Value, CultureInfo.InvariantCulture),
+                   Convert.ToSingle(xml.Attribute("Z").Value, CultureInfo.InvariantCulture),
+                   Convert.ToSingle(xml.Attribute("Radius").Value, CultureInfo.InvariantCulture))
         {
         }
     }

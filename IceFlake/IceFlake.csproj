@@ -115,7 +115,6 @@
     <Compile Include="Client\Patchables\Descriptors.cs" />
     <Compile Include="Client\Patchables\Pointers.cs" />
     <Compile Include="Client\Patchables\Structures.cs" />
-    <Compile Include="Client\Collections\QuestCollection.cs" />
     <Compile Include="Client\WoWRaid.cs" />
     <Compile Include="Client\Scripts\Script.cs" />
     <Compile Include="Client\Scripts\ScriptManager.cs" />
@@ -123,6 +122,7 @@
     <Compile Include="DirectX\Direct3DAPI.cs" />
     <Compile Include="DirectX\IPulsable.cs" />
     <Compile Include="DirectX\Matrix.cs" />
+    <Compile Include="DirectX\Matrix3.cs" />
     <Compile Include="DirectX\Squid\Framework\Game.cs" />
     <Compile Include="DirectX\Squid\Framework\GameComponent.cs" />
     <Compile Include="DirectX\Squid\Framework\GameTime.cs" />
@@ -143,7 +143,6 @@
     <Compile Include="Client\Scripts\TerminateException.cs" />
     <Compile Include="Client\WoWWorld.cs" />
     <Compile Include="Client\WoWDB.cs" />
-    <Compile Include="Client\WoWQuest.cs" />
     <Compile Include="Client\WoWScript.cs" />
     <Compile Include="DirectX\Graphics.cs" />
     <Compile Include="DirectX\IResource.cs" />
@@ -162,9 +161,7 @@
     <Compile Include="Runtime\Extensions.cs" />
     <Compile Include="Scripts\ChatScript.cs" />
     <Compile Include="Scripts\ConsoleScript.cs" />
-    <Compile Include="Scripts\DebugScript.cs" />
     <Compile Include="Scripts\PacketScript.cs" />
-    <Compile Include="Scripts\QuestHelperScript.cs" />
     <Compile Include="Scripts\RenderingScripts.cs" />
     <Compile Include="Scripts\DumpersScripts.cs" />
     <Compile Include="Scripts\FishingScript.cs" />
@@ -174,10 +171,6 @@
     <Compile Include="Scripts\TalentScript.cs" />
     <Compile Include="Scripts\UITestScript.cs" />
     <Compile Include="Scripts\VendorScript.cs" />
-    <Compile Include="Scripts\_QKDrawMenuSquid.cs" />
-    <Compile Include="Scripts\_QKDrawMeshScript.cs" />
-    <Compile Include="Scripts\_QKDrawUnitsScript.cs" />
-    <Compile Include="Scripts\_QKHackScripts.cs" />
     <EmbeddedResource Include="IceForm.resx">
       <DependentUpon>IceForm.cs</DependentUpon>
       <SubType>Designer</SubType>

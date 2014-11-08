@@ -5,11 +5,11 @@ using IceFlake.Client.Patchables;
 
 namespace IceFlake.Client
 {
-    public static class WoWRaid
+    public static class Raid
     {
         public static int NumRaidMembers
         {
-            get { return Manager.Memory.Read<int>((IntPtr) Pointers.Raid.RaidCount); }
+            get { return Manager.Memory.Read<int>((IntPtr)Pointers.Raid.RaidCount); }
         }
 
         public static IEnumerable<WoWPlayer> Members
@@ -18,16 +18,11 @@ namespace IceFlake.Client
             {
                 for (int i = 0; i < 40; i++)
                 {
-                    WoWPlayer unit = GetRaidMember(i);
+                    var unit = GetRaidMember(i);
                     if (unit != null && unit.IsValid)
                         yield return unit;
                 }
             }
-        }
-
-        public static RaidDifficulty Difficulty
-        {
-            get { return (RaidDifficulty) Manager.Memory.Read<int>((IntPtr) Pointers.Raid.RaidDifficulty); }
         }
 
         public static WoWPlayer GetRaidMember(int index)
@@ -37,7 +32,12 @@ namespace IceFlake.Client
 
         public static ulong GetRaidMemberGuid(int index)
         {
-            return Manager.Memory.Read<ulong>(Manager.Memory.Read<IntPtr>(new IntPtr(Pointers.Raid.RaidArray + index)));
+            return Manager.Memory.Read<ulong>(new IntPtr(Pointers.Raid.RaidArray + (index * 8)), true);
+        }
+
+        public static InstanceDifficulty Difficulty
+        {
+            get { return (InstanceDifficulty)Manager.Memory.Read<int>((IntPtr)Pointers.Other.InstanceDifficulty); }
         }
     }
 }

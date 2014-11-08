@@ -1,106 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WowTriangles;
+using PatherPath.Graph;
 using System.IO;
-using IceFlake.DirectX;
-using IceFlake.Runtime;
-using MeshGenLib;
+using Location = IceFlake.Client.Location;
+using PathLoc = PatherPath.Graph.Location;
 
 namespace IceFlake.Client
 {
-    public class Pather
+    public class Pather : IDisposable
     {
-        private static readonly float TileSize = (533f + (1f/3f));
-        private static readonly float[] Origin = {32f*TileSize, 32f*TileSize, 0f};
-
+        public readonly string Continent;
+        private PathGraph PG;
         public Pather(string continent)
         {
             Continent = continent;
-            DetourMesh = new NavMesh(continent, true);
+            var mpq = new MPQTriangleSupplier();
+            mpq.SetContinent(continent);
+            var triangleWorld = new ChunkedTriangleCollection(512);
+            triangleWorld.SetMaxCached(64);
+            triangleWorld.AddSupplier(mpq);
+            PG = new PathGraph(continent, triangleWorld, null, (string s) => { Log.WriteLine(s); });
         }
 
-        public string Continent { get; private set; }
-        public NavMesh DetourMesh { get; private set; }
-
-        #region Memory Management
-
-        public int MemoryPressure { get; private set; }
-
-        private void AddMemoryPressure(int bytes)
+        public List<Location> Search(Location start, Location end, double tolerance = 5.0)
         {
-            GC.AddMemoryPressure(bytes);
-            MemoryPressure += bytes;
+            //var SearchTask = Task.Factory.StartNew<List<PatherPath.Graph.Location>>(() =>
+            //{
+            //    return PG.CreatePath(Convert(start), Convert(end), (float)tolerance);
+            //}, TaskCreationOptions.LongRunning);
+            //Task.WaitAll(SearchTask);
+            //var path = SearchTask.Result;
+            var path = PG.CreatePath(Convert(start), Convert(end), (float)tolerance);
+            if (path != null && path.Locations != null)
+                return path.Locations.ConvertAll<Location>(new Converter<PathLoc, Location>((loc) => { return Convert(loc); }));
+            else return null;
         }
 
-        #endregion
-
-        #region NavMesh Helpers
-
-        public string GetTilePath(int x, int y)
+        public void Dispose()
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                string.Format(@"Meshes\{0}_{1}_{2}.mesh", Continent, x, y));
+            PG.Save();
+            PG.Clear();
+            PG = null;
         }
 
-        public void GetTileByLocation(Vector3 loc, out int x, out int y)
-        {
-            float[] input = loc.ToFloatArray();
-            float fx, fy;
-            GetTileByLocation(input, out fx, out fy);
-            x = (int) Math.Floor(fx);
-            y = (int) Math.Floor(fy);
-        }
-
-        public static void GetTileByLocation(float[] loc, out float x, out float y)
-        {
-            x = (loc[0] - Origin[0])/TileSize;
-            y = (loc[1] - Origin[0])/TileSize;
-        }
-
-        public void LoadAllTiles()
-        {
-            for (int y = 0; y < 64; y++)
-            {
-                for (int x = 0; x < 64; x++)
-                {
-                    if (!File.Exists(GetTilePath(x, y)))
-                        continue;
-                    DetourMesh.LoadTile(x, y);
-                }
-            }
-        }
-
-        public bool LoadAppropriateTiles(Vector3 start, Vector3 end)
-        {
-            const int extent = 3;
-
-            bool failed = false;
-            int tx, ty;
-            // Start
-            GetTileByLocation(start, out tx, out ty);
-            for (int y = ty - extent; y <= ty + extent; y++)
-            {
-                for (int x = tx - extent; x <= tx + extent; x++)
-                {
-                    if (!DetourMesh.LoadTile(x, y))
-                        failed = true;
-                    Log.WriteLine("{0},{1}: {2}", x, y, failed);
-                }
-            }
-
-            // End
-            GetTileByLocation(end, out tx, out ty);
-            for (int y = ty - extent; y <= ty + extent; y++)
-            {
-                for (int x = tx - extent; x <= tx + extent; x++)
-                {
-                    if (!DetourMesh.LoadTile(x, y))
-                        failed = true;
-                    Log.WriteLine("{0},{1}: {2}", x, y, failed);
-                }
-            }
-
-            return !failed;
-        }
-
-        #endregion
+        public PathLoc Convert(Location loc) { return new PathLoc(loc.X, loc.Y, loc.Z); }
+        public Location Convert(PathLoc loc) { return new Location(loc.X, loc.Y, loc.Z); }
     }
 }

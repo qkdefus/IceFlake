@@ -101,9 +101,7 @@ namespace IceFlake.Client.Objects
             get
             {
                 return
-                    Manager.ObjectManager.Objects.Where(x => x.IsValid && x.IsUnit)
-                        .OfType<WoWUnit>()
-                        .FirstOrDefault(x => x.SummonedBy == Guid);
+                    Manager.ObjectManager.Objects.Where(x => x.IsValid && x.IsUnit).OfType<WoWUnit>().FirstOrDefault(x => x.SummonedBy == Guid);
             }
         }
     }

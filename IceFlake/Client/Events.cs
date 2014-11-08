@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using GreyMagic.Internals;
 using IceFlake.Client.Patchables;
 using IceFlake.DirectX;
-using IceFlake.Runtime;
+using GreyMagic.Internals;
 
 namespace IceFlake.Client
 {
-    public class WoWEvents : IPulsable
+    public class Events
     {
-        public WoWEvents()
+        public Events()
         {
             var eventVictim = Manager.Memory.RegisterDelegate<LuaFunctionDelegate>(
-                (IntPtr) Pointers.Events.EventVictim);
-            if (_eventDetour == null || !_eventDetour.IsApplied)
-                _eventDetour = Manager.Memory.Detours.CreateAndApply(eventVictim,
-                    new LuaFunctionDelegate(HandleVictimCall),
-                    "EventVictim");
+                (IntPtr)Pointers.Events.EventVictim);
+            _eventDetour = Manager.Memory.Detours.CreateAndApply(eventVictim, new LuaFunctionDelegate(HandleVictimCall),
+                                                                 "EventVictim");
         }
 
         private bool ListenerExists
@@ -30,7 +27,8 @@ namespace IceFlake.Client
             }
         }
 
-        public void Direct3D_EndScene()
+        [EndSceneHandler]
+        private void Direct3D_EndScene()
         {
             if ((DateTime.Now - _lastRegisterCheck).TotalMilliseconds >= RegisterCheckWait)
             {
@@ -45,7 +43,7 @@ namespace IceFlake.Client
             if (_eventHandler.ContainsKey(name))
                 _eventHandler[name].Add(handler);
             else
-                _eventHandler.Add(name, new List<EventHandler> {handler});
+                _eventHandler.Add(name, new List<EventHandler> { handler });
         }
 
         public void Remove(string name, EventHandler handler)
@@ -58,34 +56,28 @@ namespace IceFlake.Client
         {
             string eventName = args[0];
             args.RemoveAt(0);
-            if (_eventHandler.ContainsKey(eventName)) // First check for absolute matches
+            if (_eventHandler.ContainsKey(eventName))
             {
                 foreach (EventHandler handler in _eventHandler[eventName])
                     handler(eventName, args);
-            }
-            else // Then check for wildcard matches
-            {
-                foreach (var kv in _eventHandler)
-                    if (eventName.WildcardMatch(kv.Key))
-                        foreach (EventHandler handler in kv.Value)
-                            handler(eventName, args);
             }
         }
 
         private int HandleVictimCall(IntPtr luaState)
         {
-            int top = WoWScript.LuaInterface.GetTop(luaState);
+            int top = LuaInterface.GetTop(luaState);
             if (top > 0)
             {
                 var args = new List<string>(top);
                 for (int i = 1; i <= top; i++)
-                    args.Add(WoWScript.LuaInterface.StackObjectToString(luaState, i));
-                WoWScript.LuaInterface.Pop(luaState, top);
+                    args.Add(LuaInterface.StackObjectToString(luaState, i));
+                LuaInterface.Pop(luaState, top);
                 HandleEvent(args);
             }
             else
             {
-                return (int) _eventDetour.CallOriginal(luaState);
+                // legal call
+                return (int)_eventDetour.CallOriginal(luaState);
             }
 
             return 0;
@@ -115,7 +107,7 @@ namespace IceFlake.Client
 
         private const int RegisterCheckWait = 500; /*ms*/
 
-        private static Detour _eventDetour;
+        private readonly Detour _eventDetour;
 
         private readonly Dictionary<string, List<EventHandler>> _eventHandler =
             new Dictionary<string, List<EventHandler>>();

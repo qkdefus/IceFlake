@@ -1,5 +1,6 @@
-﻿using IceFlake.Client.Collections;
+﻿using System;
 using IceFlake.Client.Patchables;
+using IceFlake.Client.Collections;
 
 namespace IceFlake.Client.Objects
 {
@@ -10,7 +11,7 @@ namespace IceFlake.Client.Objects
             Id = id;
             try
             {
-                SpellRecord = Manager.DBC[ClientDB.Spell].GetLocalizedRow((int) id).GetStruct<SpellRec>();
+                SpellRecord = Manager.DBC[ClientDB.Spell].GetLocalizedRow((int)id).GetStruct<SpellRec>();
             }
             catch
             {
@@ -33,22 +34,6 @@ namespace IceFlake.Client.Objects
             get { return SpellRecord.SpellName; }
         }
 
-        public float Cooldown
-        {
-            get
-            {
-                if (!IsValid)
-                    return float.MaxValue;
-
-                return SpellCollection.GetSpellCoolDown(Id);
-            }
-        }
-
-        public bool IsReady
-        {
-            get { return Cooldown <= 0f; }
-        }
-
         public void Cast()
         {
             Cast(Manager.LocalPlayer);
@@ -65,6 +50,22 @@ namespace IceFlake.Client.Objects
             //target.Select();
             //WoWScript.ExecuteNoResults("CastSpellByID(" + Id + ")");
             SpellCollection.CastSpell(Id, guid: target.Guid);
+        }
+
+        public float Cooldown
+        {
+            get
+            {
+                if (!IsValid)
+                    return float.MaxValue;
+
+                return SpellCollection.GetSpellCoolDown(Id);
+            }
+        }
+
+        public bool IsReady
+        {
+            get { return Cooldown <= 0f; }
         }
     }
 }

@@ -179,6 +179,7 @@ namespace IceFlake.Scripts
 
     #region EquippedItemsDumperScript
 
+    /*/
     public class EquippedItemsDumperScript : Script
     {
         public EquippedItemsDumperScript()
@@ -224,6 +225,7 @@ namespace IceFlake.Scripts
             Stop();
         }
     }
+    /*/
 
     #endregion
 
@@ -253,6 +255,7 @@ namespace IceFlake.Scripts
 
     #region QuestDumperScript
 
+    /*/
     public class QuestDumperScript : Script
     {
         public QuestDumperScript()
@@ -280,6 +283,7 @@ namespace IceFlake.Scripts
             Stop();
         }
     }
+    /*/
 
     #endregion
 

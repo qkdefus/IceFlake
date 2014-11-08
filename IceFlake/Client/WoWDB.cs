@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Runtime.InteropServices;
 using IceFlake.Client.Patchables;
 
@@ -11,20 +13,17 @@ namespace IceFlake.Client
 
         public WoWDB()
         {
-            for (var tableBase = (IntPtr) Pointers.DBC.RegisterBase;
-                Manager.Memory.Read<byte>(tableBase) != 0xC3;
-                tableBase += 0x11)
+            for (var tableBase = (IntPtr)Pointers.DBC.RegisterBase;
+                 Manager.Memory.Read<byte>(tableBase) != 0xC3;
+                 tableBase += 0x11)
             {
                 var index = Manager.Memory.Read<uint>(tableBase + 1);
                 var tablePtr = new IntPtr(Manager.Memory.Read<int>(tableBase + 0xB) + 0x18);
-                Tables.Add((ClientDB) index, new DbTable(tablePtr));
+                Tables.Add((ClientDB)index, new DbTable(tablePtr));
             }
         }
 
-        public DbTable this[ClientDB db]
-        {
-            get { return Tables[db]; }
-        }
+        public DbTable this[ClientDB db] { get { return Tables[db]; } }
 
         #region Nested type: DbTable
 
@@ -54,10 +53,9 @@ namespace IceFlake.Client
             {
                 if (_getLocalizedRow == null)
                 {
-                    _getLocalizedRow =
-                        Manager.Memory.RegisterDelegate<ClientDb_GetLocalizedRow>((IntPtr) Pointers.DBC.GetLocalizedRow);
+                    _getLocalizedRow = Manager.Memory.RegisterDelegate<ClientDb_GetLocalizedRow>((IntPtr)Pointers.DBC.GetLocalizedRow);
                 }
-                IntPtr rowPtr = Marshal.AllocHGlobal(4*4*256);
+                IntPtr rowPtr = Marshal.AllocHGlobal(4 * 4 * 256);
                 int tmp = _getLocalizedRow(new IntPtr(Address.ToInt32() - 0x18), index, rowPtr);
                 if (tmp != 0)
                 {
@@ -71,7 +69,7 @@ namespace IceFlake.Client
             {
                 if (_getRow == null)
                 {
-                    _getRow = Manager.Memory.RegisterDelegate<ClientDb_GetRow>((IntPtr) Pointers.DBC.GetRow);
+                    _getRow = Manager.Memory.RegisterDelegate<ClientDb_GetRow>((IntPtr)Pointers.DBC.GetRow);
                 }
                 var ret = new IntPtr(_getRow(new IntPtr(Address.ToInt32()), index));
                 return ret == IntPtr.Zero ? null : new Row(ret, false);
@@ -96,10 +94,11 @@ namespace IceFlake.Client
             [StructLayout(LayoutKind.Sequential)]
             private struct DbHeader
             {
-                [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)] public readonly uint[] Junk;
+                [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+                public uint[] Junk;
 
-                public readonly uint MaxIndex;
-                public readonly uint MinIndex;
+                public uint MaxIndex;
+                public uint MinIndex;
             }
 
             #endregion
@@ -110,7 +109,6 @@ namespace IceFlake.Client
             {
                 private readonly bool _isManagedMem;
                 private IntPtr _rowPtr;
-                private object structedObject;
 
                 private Row(IntPtr rowPtr)
                 {
@@ -142,16 +140,14 @@ namespace IceFlake.Client
                 {
                     try
                     {
-                        if (typeof (T) == typeof (string))
+                        if (typeof(T) == typeof(string))
                         {
                             // Sometimes.... generics ****ing suck
-                            object s =
-                                Marshal.PtrToStringAnsi(
-                                    Manager.Memory.Read<IntPtr>(new IntPtr((uint) _rowPtr + (index*4))));
-                            return (T) s;
+                            object s = Marshal.PtrToStringAnsi(Manager.Memory.Read<IntPtr>(new IntPtr((uint)_rowPtr + (index * 4))));
+                            return (T)s;
                         }
 
-                        return Manager.Memory.Read<T>(new IntPtr((uint) _rowPtr + (index*4)));
+                        return Manager.Memory.Read<T>(new IntPtr((uint)_rowPtr + (index * 4)));
                     }
                     catch
                     {
@@ -165,17 +161,18 @@ namespace IceFlake.Client
                 //    Win32.WriteBytes((IntPtr)(_rowPtr.ToUInt32() + (index * 4)), bs);
                 //}
 
+                private object structedObject = null;
                 public T GetStruct<T>() where T : struct
                 {
                     try
                     {
                         if (structedObject == null)
                         {
-                            IntPtr addr = _rowPtr;
-                            structedObject = (T) Marshal.PtrToStructure(addr, typeof (T));
+                            var addr = (IntPtr)_rowPtr;
+                            structedObject = (T)Marshal.PtrToStructure(addr, typeof(T));
                             Marshal.FreeHGlobal(addr);
                         }
-                        return (T) structedObject;
+                        return (T)structedObject;
                     }
                     catch
                     {

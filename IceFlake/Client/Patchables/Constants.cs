@@ -2548,7 +2548,7 @@ namespace IceFlake.Client.Patchables
         Quest
     }
 
-    public enum PowerType // 3.3.5a: 12340 // qk
+    public enum WoWPowerType // 3.3.5a: 12340 // qk
     {
         //Mana = 0,
         //Rage = 1,
