@@ -8,7 +8,7 @@ using IceFlake.Client.Objects;
 using IceFlake.Client.Patchables;
 using IceFlake.Client.Scripts;
 using IceFlake.DirectX;
-using Vector3 = Microsoft.Xna.Framework.Vector3;
+//using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace IceFlake
 {
@@ -176,11 +176,11 @@ namespace IceFlake
             {
                 string map = WoWWorld.CurrentMap;
                 Log.WriteLine("Generate path from {0} to {1} in {2}", _pos1, _pos2, map);
-                var mesh = new Pather("Kalimdor");
-                mesh.LoadAppropriateTiles(_pos1.ToVector3(), _pos2.ToVector3());
-                List<Vector3> path = mesh.DetourMesh.FindPath(_pos1.ToFloatArray(), _pos2.ToFloatArray(), false);
-                foreach (Vector3 point in path)
-                    Log.WriteLine("[{0}]", point.ToString());
+                //var mesh = new Pather("Kalimdor");
+                //mesh.LoadAppropriateTiles(_pos1.ToVector3(), _pos2.ToVector3());
+                //List<Vector3> path = mesh.DetourMesh.FindPath(_pos1.ToFloatArray(), _pos2.ToFloatArray(), false);
+                //foreach (Vector3 point in path)
+                //    Log.WriteLine("[{0}]", point.ToString());
             }
             catch (Exception ex)
             {

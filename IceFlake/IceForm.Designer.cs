@@ -48,6 +48,7 @@
             this.btnScriptStop = new System.Windows.Forms.Button();
             this.btnScriptStart = new System.Windows.Forms.Button();
             this.tabDebug = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnLoSTest = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
             this.tbLUA = new System.Windows.Forms.TextBox();
@@ -61,7 +62,6 @@
             this.lblPos2 = new System.Windows.Forms.Label();
             this.btnGenPath = new System.Windows.Forms.Button();
             this.GUITimer = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabStatus.SuspendLayout();
             this.gbPlayer.SuspendLayout();
@@ -78,7 +78,7 @@
             this.rbLogBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.rbLogBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.rbLogBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbLogBox.Location = new System.Drawing.Point(0, 213);
+            this.rbLogBox.Location = new System.Drawing.Point(0, 420);
             this.rbLogBox.Name = "rbLogBox";
             this.rbLogBox.ReadOnly = true;
             this.rbLogBox.Size = new System.Drawing.Size(361, 298);
@@ -95,7 +95,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(361, 213);
+            this.tabControl1.Size = new System.Drawing.Size(361, 420);
             this.tabControl1.TabIndex = 3;
             // 
             // tabStatus
@@ -225,7 +225,7 @@
             this.tabScripts.Location = new System.Drawing.Point(4, 22);
             this.tabScripts.Name = "tabScripts";
             this.tabScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScripts.Size = new System.Drawing.Size(353, 187);
+            this.tabScripts.Size = new System.Drawing.Size(353, 394);
             this.tabScripts.TabIndex = 0;
             this.tabScripts.Text = "Scripts";
             this.tabScripts.UseVisualStyleBackColor = true;
@@ -235,7 +235,7 @@
             this.lstScripts.FormattingEnabled = true;
             this.lstScripts.Location = new System.Drawing.Point(6, 7);
             this.lstScripts.Name = "lstScripts";
-            this.lstScripts.Size = new System.Drawing.Size(339, 139);
+            this.lstScripts.Size = new System.Drawing.Size(339, 349);
             this.lstScripts.TabIndex = 4;
             this.lstScripts.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstScripts_ItemCheck);
             this.lstScripts.SelectedIndexChanged += new System.EventHandler(this.lstScripts_SelectedIndexChanged);
@@ -243,7 +243,7 @@
             // btnScriptCompile
             // 
             this.btnScriptCompile.Image = global::IceFlake.Properties.Resources.brick_go;
-            this.btnScriptCompile.Location = new System.Drawing.Point(168, 156);
+            this.btnScriptCompile.Location = new System.Drawing.Point(166, 364);
             this.btnScriptCompile.Name = "btnScriptCompile";
             this.btnScriptCompile.Size = new System.Drawing.Size(75, 23);
             this.btnScriptCompile.TabIndex = 3;
@@ -255,7 +255,7 @@
             // btnScriptStop
             // 
             this.btnScriptStop.Image = global::IceFlake.Properties.Resources.control_stop_blue;
-            this.btnScriptStop.Location = new System.Drawing.Point(87, 156);
+            this.btnScriptStop.Location = new System.Drawing.Point(85, 364);
             this.btnScriptStop.Name = "btnScriptStop";
             this.btnScriptStop.Size = new System.Drawing.Size(75, 23);
             this.btnScriptStop.TabIndex = 2;
@@ -267,7 +267,7 @@
             // btnScriptStart
             // 
             this.btnScriptStart.Image = global::IceFlake.Properties.Resources.control_play_blue;
-            this.btnScriptStart.Location = new System.Drawing.Point(6, 156);
+            this.btnScriptStart.Location = new System.Drawing.Point(4, 364);
             this.btnScriptStart.Name = "btnScriptStart";
             this.btnScriptStart.Size = new System.Drawing.Size(75, 23);
             this.btnScriptStart.TabIndex = 1;
@@ -286,10 +286,20 @@
             this.tabDebug.Location = new System.Drawing.Point(4, 22);
             this.tabDebug.Name = "tabDebug";
             this.tabDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebug.Size = new System.Drawing.Size(353, 187);
+            this.tabDebug.Size = new System.Drawing.Size(353, 394);
             this.tabDebug.TabIndex = 1;
             this.tabDebug.Text = "Debug";
             this.tabDebug.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(262, 158);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "DebugWnd...";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnLoSTest
             // 
@@ -423,21 +433,11 @@
             this.GUITimer.Interval = 500;
             this.GUITimer.Tick += new System.EventHandler(this.GUITimer_Tick);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(262, 158);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "DebugWnd...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // IceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 511);
+            this.ClientSize = new System.Drawing.Size(361, 718);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.rbLogBox);
             this.MaximizeBox = false;
