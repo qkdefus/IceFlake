@@ -8,7 +8,7 @@ using IceFlake.DirectX;
 
 namespace IceFlake.Client
 {
-    public class ObjectManager
+    public class ObjectManager : IPulsable
     {
         private static EnumVisibleObjectsDelegate _enumVisibleObjects;
         private static IntPtr _ourCallback;
@@ -26,6 +26,26 @@ namespace IceFlake.Client
 
         public WoWLocalPlayer LocalPlayer { get; private set; }
         public List<WoWObject> Objects { get; private set; }
+
+        public GameState GameState
+        {
+            get { return Manager.Memory.Read<GameState>((IntPtr) Pointers.Other.GameState); }
+        }
+
+        public bool IsLoading
+        {
+            get { return Manager.Memory.Read<bool>((IntPtr) Pointers.Other.WorldLoading); }
+        }
+
+        public bool IsLoaded
+        {
+            get { return Manager.Memory.Read<bool>((IntPtr) Pointers.Other.WorldLoaded); }
+        }
+
+        public string RealmName
+        {
+            get { return Manager.Memory.ReadString((IntPtr) Pointers.Other.RealmName); }
+        }
 
         #endregion
 
@@ -50,7 +70,6 @@ namespace IceFlake.Client
             get { return LocalPlayer != null; }
         }
 
-        [EndSceneHandler]
         public void Direct3D_EndScene()
         {
             ulong localPlayerGuid = _getLocalPlayer();
@@ -119,28 +138,16 @@ namespace IceFlake.Client
             return 1;
         }
 
-        #region Nested type: EnumVisibleObjectsCallback
+        #region Typedefs & Delegates
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate int EnumVisibleObjectsCallback(ulong guid, uint filter);
 
-        #endregion
-
-        #region Nested type: EnumVisibleObjectsDelegate
-
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate uint EnumVisibleObjectsDelegate(IntPtr callback, int filter);
 
-        #endregion
-
-        #region Nested type: GetLocalPlayerDelegate
-
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate ulong GetLocalPlayerDelegate();
-
-        #endregion
-
-        #region Nested type: GetObjectByGuidDelegate
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate IntPtr GetObjectByGuidDelegate(ulong guid, int filter);

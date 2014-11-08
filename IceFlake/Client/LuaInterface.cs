@@ -5,9 +5,33 @@ using IceFlake.Client.Patchables;
 
 namespace IceFlake.Client
 {
-    internal static class LuaInterface
+    internal class LuaInterface
     {
-        #region Delegates
+        public LuaGetTopDelegate GetTop;
+        public LuaLoadBufferDelegate LoadBuffer;
+        public LuaPCallDelegate PCall;
+        public LuaSetTopDelegate SetTop;
+        public LuaToBooleanDelegate ToBoolean;
+        public LuaToLStringDelegate ToLString;
+        public LuaToNumberDelegate ToNumber;
+        public LuaTypeDelegate Type;
+
+        internal LuaInterface()
+        {
+            GetTop = Manager.Memory.RegisterDelegate<LuaGetTopDelegate>((IntPtr) Pointers.LuaInterface.LuaGetTop);
+            SetTop = Manager.Memory.RegisterDelegate<LuaSetTopDelegate>((IntPtr) Pointers.LuaInterface.LuaSetTop);
+            Type = Manager.Memory.RegisterDelegate<LuaTypeDelegate>((IntPtr) Pointers.LuaInterface.LuaType);
+            ToLString =
+                Manager.Memory.RegisterDelegate<LuaToLStringDelegate>((IntPtr) Pointers.LuaInterface.LuaToLString);
+            ToBoolean =
+                Manager.Memory.RegisterDelegate<LuaToBooleanDelegate>((IntPtr) Pointers.LuaInterface.LuaToBoolean);
+            ToNumber = Manager.Memory.RegisterDelegate<LuaToNumberDelegate>((IntPtr) Pointers.LuaInterface.LuaToNumber);
+            PCall = Manager.Memory.RegisterDelegate<LuaPCallDelegate>((IntPtr) Pointers.LuaInterface.LuaPCall);
+            LoadBuffer =
+                Manager.Memory.RegisterDelegate<LuaLoadBufferDelegate>((IntPtr) Pointers.LuaInterface.LuaLoadBuffer);
+        }
+
+        #region Typedefs & Delegates
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int LuaGetTopDelegate(IntPtr luaState);
@@ -50,49 +74,19 @@ namespace IceFlake.Client
 
         #endregion
 
-        public static LuaGetTopDelegate GetTop;
-        public static LuaSetTopDelegate SetTop;
-
-        public static LuaTypeDelegate Type;
-
-        public static LuaToLStringDelegate ToLString;
-
-        public static LuaToBooleanDelegate ToBoolean;
-
-        public static LuaToNumberDelegate ToNumber;
-
-        public static LuaPCallDelegate PCall;
-
-        public static LuaLoadBufferDelegate LoadBuffer;
-
-        public static IntPtr LuaState
+        public IntPtr LuaState
         {
-            get { return Manager.Memory.Read<IntPtr>((IntPtr)Pointers.LuaInterface.LuaState); }
+            get { return Manager.Memory.Read<IntPtr>((IntPtr) Pointers.LuaInterface.LuaState); }
         }
 
-        public static void Pop(IntPtr state, int n)
+        public void Pop(IntPtr state, int n)
         {
             SetTop(state, -(n) - 1);
         }
 
-        public static void Initialize()
+        public string StackObjectToString(IntPtr state, int index)
         {
-            GetTop = Manager.Memory.RegisterDelegate<LuaGetTopDelegate>((IntPtr)Pointers.LuaInterface.LuaGetTop);
-            SetTop = Manager.Memory.RegisterDelegate<LuaSetTopDelegate>((IntPtr)Pointers.LuaInterface.LuaSetTop);
-            Type = Manager.Memory.RegisterDelegate<LuaTypeDelegate>((IntPtr)Pointers.LuaInterface.LuaType);
-            ToLString =
-                Manager.Memory.RegisterDelegate<LuaToLStringDelegate>((IntPtr)Pointers.LuaInterface.LuaToLString);
-            ToBoolean =
-                Manager.Memory.RegisterDelegate<LuaToBooleanDelegate>((IntPtr)Pointers.LuaInterface.LuaToBoolean);
-            ToNumber = Manager.Memory.RegisterDelegate<LuaToNumberDelegate>((IntPtr)Pointers.LuaInterface.LuaToNumber);
-            PCall = Manager.Memory.RegisterDelegate<LuaPCallDelegate>((IntPtr)Pointers.LuaInterface.LuaPCall);
-            LoadBuffer =
-                Manager.Memory.RegisterDelegate<LuaLoadBufferDelegate>((IntPtr)Pointers.LuaInterface.LuaLoadBuffer);
-        }
-
-        public static string StackObjectToString(IntPtr state, int index)
-        {
-            var ltype = (LuaConstant)Type(state, index);
+            var ltype = (LuaConstant) Type(state, index);
 
             switch (ltype)
             {

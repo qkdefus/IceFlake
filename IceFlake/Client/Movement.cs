@@ -1,105 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IceFlake.Runtime;
-using IceFlake.Client.Objects;
 using IceFlake.DirectX;
+
+//using meshPather;
 
 namespace IceFlake.Client
 {
-    public class Movement
+    public class Movement : IPulsable
     {
+        public Queue<Location> generatedPath;
+
         public Movement()
         {
             if (!Manager.ObjectManager.IsInGame)
                 return;
 
-            CurrentMap = World.CurrentMap;
-            PatherInstance = new Pather(CurrentMap);
+            CurrentMap = WoWWorld.CurrentMap;
+            //PatherInstance = new Pather(CurrentMap);
         }
 
-        private string CurrentMap
-        {
-            get;
-            set;
-        }
+        private string CurrentMap { get; set; }
 
-        private Pather PatherInstance
-        {
-            get;
-            set;
-        }
-
-        private DateTime SleepTime
-        {
-            get;
-            set;
-        }
-
-        public Location Destination
-        {
-            get;
-            private set;
-        }
-
-        public Location CurrentLocation
-        {
-            get;
-            private set;
-        }
-
-        public bool PathTo(Location pos)
-        {
-            if (!Manager.ObjectManager.IsInGame)
-                return false;
-
-            if (CurrentMap != World.CurrentMap)
-            {
-                CurrentMap = World.CurrentMap;
-                PatherInstance = new Pather(CurrentMap);
-            }
-
-            if (PatherInstance == null)
-                return false;
-
-            Destination = pos;
-            var path = PatherInstance.Search(Manager.LocalPlayer.Location, pos);
-            if (path == null)
-            {
-                Log.WriteLine("Could not path to {0}", pos);
-                return false;
-            }
-
-            FollowPath(path);
-
-            return true;
-        }
-
-        //private Queue<Location> generatedPath;
-        //public void FollowPath(List<Location> Path, Action<int, int> AfterSpot = null, double tolerance = 3D, double face_tolerance = 0.5D)
+        //public Pather PatherInstance
         //{
-        //    generatedPath = new Queue<Location>();
-        //    foreach (var spot in Path)
-        //        generatedPath.Enqueue(spot);
+        //    get;
+        //    set;
         //}
 
-        public Queue<Location> generatedPath;
-        public void FollowPath(List<Location> Path, Action<int, int> AfterSpot = null, double tolerance = 3D, double face_tolerance = 0.5D)
-        {
-            generatedPath = new Queue<Location>();
-            foreach (var spot in Path)
-                generatedPath.Enqueue(spot);
-        }
+        private DateTime SleepTime { get; set; }
 
-        public void Stop()
-        {
-            generatedPath.Clear();
-            Destination = default(Location);
-            Manager.LocalPlayer.StopCTM();
-        }
+        public Location Destination { get; private set; }
 
-        [EndSceneHandler]
+        public Location CurrentLocation { get; private set; }
+
         public void Direct3D_EndScene()
         {
             if (!Manager.ObjectManager.IsInGame)
@@ -117,12 +50,57 @@ namespace IceFlake.Client
             if (SleepTime >= DateTime.Now)
                 return;
 
-            while (generatedPath.Count > 0 && (CurrentLocation == default(Location) || Manager.LocalPlayer.Location.DistanceTo(CurrentLocation) < 3f))
+            while (generatedPath.Count > 0 &&
+                   (CurrentLocation == default(Location) ||
+                    Manager.LocalPlayer.Location.DistanceTo(CurrentLocation) < 3f))
                 CurrentLocation = generatedPath.Dequeue();
 
             MoveTo(CurrentLocation, 3f);
 
             SleepTime = DateTime.Now + TimeSpan.FromMilliseconds(100);
+        }
+
+        public bool PathTo(Location pos)
+        {
+            if (!Manager.ObjectManager.IsInGame)
+                return false;
+
+            //if (CurrentMap != WoWWorld.CurrentMap)
+            //{
+            //    CurrentMap = WoWWorld.CurrentMap;
+            //    PatherInstance = new Pather(CurrentMap);
+            //}
+
+            //if (PatherInstance == null)
+            //    return false;
+
+            //Destination = pos;
+            //var path = PatherInstance.FindPath(Manager.LocalPlayer.Location, pos, false);
+            ////var path = PatherInstance.FindPath(Manager.LocalPlayer.Location, pos.ToVector3());
+            //if (path == null)
+            //{
+            //    Log.WriteLine("Could not path to {0}", pos);
+            //    return false;
+            //}
+
+            //FollowPath(path.ToLocation());
+
+            return true;
+        }
+
+        public void FollowPath(IEnumerable<Location> Path)
+        {
+            generatedPath = new Queue<Location>();
+            foreach (Location spot in Path)
+                Log.WriteLine("\t{0}", spot);
+            //generatedPath.Enqueue(spot);
+        }
+
+        public void Stop()
+        {
+            generatedPath.Clear();
+            Destination = default(Location);
+            Manager.LocalPlayer.StopCTM();
         }
 
         public bool MoveTo(Location loc, double tolerance = 5)

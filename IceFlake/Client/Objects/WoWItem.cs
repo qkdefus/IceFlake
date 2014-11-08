@@ -7,27 +7,29 @@ namespace IceFlake.Client.Objects
 {
     public class WoWItem : WoWObject
     {
-        [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-        private delegate void UseItemDelegate(IntPtr thisObj, ref ulong guid, int unkZero);
+        #region Typedefs & Delegates
+
         private static UseItemDelegate _useItem;
 
+        private static GetItemInfoBlockByIdDelegate _getItemInfoBlockById;
+
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-        private delegate IntPtr GetInfoBlockByIdDelegate(IntPtr instance, uint id, ref ulong guid, int a4 = 0, int a5 = 0, int a6 = 0);
-        private static GetInfoBlockByIdDelegate _getInfoBlockById;
+        private delegate IntPtr GetItemInfoBlockByIdDelegate(
+            IntPtr instance, uint id, ref ulong guid, int a4 = 0, int a5 = 0, int a6 = 0);
+
+        [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
+        private delegate void UseItemDelegate(IntPtr thisObj, ref ulong guid, int unkZero);
+
+        #endregion
 
         public WoWItem(IntPtr pointer)
             : base(pointer)
         {
             if (IsValid)
             {
-                ItemInfo = WoWItem.GetItemRecordFromId(this.Entry, this.Guid);
+                ItemInfo = GetItemRecordFromId(Entry, Guid);
             }
         }
-
-        //public bool IsUsable
-        //{
-        //    get { return WoWScript.Execute<bool>("return IsUsableItem(" + this.Entry + ")", 0); }
-        //}
 
         public ulong OwnerGuid
         {
@@ -46,7 +48,7 @@ namespace IceFlake.Client.Objects
 
         public ItemFlags Flags
         {
-            get { return (ItemFlags)GetDescriptor<uint>(WoWItemFields.ITEM_FIELD_FLAGS); }
+            get { return (ItemFlags) GetDescriptor<uint>(WoWItemFields.ITEM_FIELD_FLAGS); }
         }
 
         public uint RandomPropertiesId
@@ -68,11 +70,20 @@ namespace IceFlake.Client.Objects
         {
             get
             {
-                for (var i = 0; i < 12; i++)
-                    if (GetAbsoluteDescriptor<uint>((int)WoWItemFields.ITEM_FIELD_ENCHANTMENT_1_1 * 0x4 + (i * 12)) > 0)
-                        yield return GetAbsoluteDescriptor<ItemEnchantment>((int)WoWItemFields.ITEM_FIELD_ENCHANTMENT_1_1 * 0x4 + (i * 12));
+                for (int i = 0; i < 12; i++)
+                    if (GetAbsoluteDescriptor<uint>((int) WoWItemFields.ITEM_FIELD_ENCHANTMENT_1_1*0x4 + (i*12)) > 0)
+                        yield return
+                            GetAbsoluteDescriptor<ItemEnchantment>((int) WoWItemFields.ITEM_FIELD_ENCHANTMENT_1_1*0x4 +
+                                                                   (i*12));
             }
         }
+
+        public bool IsSoulbound
+        {
+            get { return ((uint) Flags & 1u) != 0; }
+        }
+
+        public ItemCacheRecord ItemInfo { get; private set; }
 
         public void Use()
         {
@@ -82,22 +93,12 @@ namespace IceFlake.Client.Objects
         public void Use(WoWObject target)
         {
             if (_useItem == null)
-                _useItem = Manager.Memory.RegisterDelegate<UseItemDelegate>((IntPtr)Pointers.Item.UseItem);
-            var guid = target.Guid;
+                _useItem = Manager.Memory.RegisterDelegate<UseItemDelegate>((IntPtr) Pointers.Item.UseItem);
+            ulong guid = target.Guid;
             _useItem(Manager.LocalPlayer.Pointer, ref guid, 0);
         }
 
-        public bool IsSoulbound
-        {
-            get { return ((uint)this.Flags & 1u) != 0; }
-        }
-
-        public ItemInfo ItemInfo
-        {
-            get;
-            private set;
-        }
-
+        // TODO: This can probably be optimized (a lot)
         public bool GetSlotIndexes(out int container, out int slot)
         {
             // Remember that lua is 1 indexed based!
@@ -105,11 +106,11 @@ namespace IceFlake.Client.Objects
             slot = -1;
 
             // Backpack
-            for (var i = 0; i < 16; i++)
+            for (int i = 0; i < 16; i++)
             {
-                var item = Manager.LocalPlayer.GetBackpackItem(i);
+                WoWItem item = Manager.LocalPlayer.GetBackpackItem(i);
                 if (item == null || !item.IsValid) continue;
-                if (item.Guid == this.Guid)
+                if (item.Guid == Guid)
                 {
                     container = 0;
                     slot = i + 1;
@@ -118,15 +119,15 @@ namespace IceFlake.Client.Objects
             }
 
             // All the bags
-            for (var i = (int)BagSlot.Bag1; i < (int)BagSlot.Bank7; i++)
+            for (var i = (int) BagSlot.Bag1; i < (int) BagSlot.Bank7; i++)
             {
-                var bag = WoWContainer.GetBagByIndex(i);
+                WoWContainer bag = WoWContainer.GetBagByIndex(i);
                 if (bag == null || !bag.IsValid) continue;
-                for (var x = 0; x < bag.Slots; x++)
+                for (int x = 0; x < bag.Slots; x++)
                 {
-                    var guid = bag.GetItemGuid(x);
+                    ulong guid = bag.GetItemGuid(x);
                     if (guid == 0ul) continue;
-                    if (guid == this.Guid)
+                    if (guid == Guid)
                     {
                         container = i + 1;
                         slot = x + 1;
@@ -139,18 +140,20 @@ namespace IceFlake.Client.Objects
 
         public static IntPtr GetItemRecordPointerFromId(uint id, ulong guid = 0ul)
         {
-            if (_getInfoBlockById == null)
-                _getInfoBlockById = Manager.Memory.RegisterDelegate<GetInfoBlockByIdDelegate>((IntPtr)Pointers.WDB.DBItemCache_GetInfoBlockByID);
+            if (_getItemInfoBlockById == null)
+                _getItemInfoBlockById =
+                    Manager.Memory.RegisterDelegate<GetItemInfoBlockByIdDelegate>(
+                        (IntPtr) Pointers.WDB.DdItemCache_GetInfoBlockByID);
 
-            return _getInfoBlockById((IntPtr)Pointers.WDB.ItemInfo, id, ref guid);
+            return _getItemInfoBlockById((IntPtr) Pointers.WDB.WdbItemCache, id, ref guid);
         }
 
-        public static ItemInfo GetItemRecordFromId(uint id, ulong guid = 0ul)
+        public static ItemCacheRecord GetItemRecordFromId(uint id, ulong guid = 0ul)
         {
-            var ptr = GetItemRecordPointerFromId(id, guid);
+            IntPtr ptr = GetItemRecordPointerFromId(id, guid);
             if (ptr == IntPtr.Zero)
-                return default(ItemInfo);
-            return Manager.Memory.Read<ItemInfo>(ptr);
+                return default(ItemCacheRecord);
+            return Manager.Memory.Read<ItemCacheRecord>(ptr);
         }
 
         public static IEnumerable<EquipSlot> GetInventorySlotsByEquipSlot(InventoryType type)
@@ -215,17 +218,17 @@ namespace IceFlake.Client.Objects
                     yield return EquipSlot.Back;
                     break;
                 case InventoryType.TwoHandedWeapon:
-                    {
-                        yield return EquipSlot.MainHand;
-                        // TODO: Check for titan's grip
-                        //bool flag = Manager.LocalPlayer.Class == WoWClass.Warrior && WoWScript.Execute<int>(InventoryManager.#a(61464), 4u) > 0;
-                        //var mainHand = Manager.LocalPlayer.GetEquippedItem(EquipSlot.MainHand);
-                        //if (flag && mainHand != null && mainHand.ItemInfo.InventoryType == InventoryType.TwoHandedWeapon)
-                        //{
-                        //    yield return EquipSlot.OffHand;
-                        //}
-                        break;
-                    }
+                {
+                    yield return EquipSlot.MainHand;
+                    // TODO: Check for titan's grip
+                    //bool flag = Manager.LocalPlayer.Class == WoWClass.Warrior && WoWScript.Execute<int>(InventoryManager.#a(61464), 4u) > 0;
+                    //var mainHand = Manager.LocalPlayer.GetEquippedItem(EquipSlot.MainHand);
+                    //if (flag && mainHand != null && mainHand.ItemInfo.InventoryType == InventoryType.TwoHandedWeapon)
+                    //{
+                    //    yield return EquipSlot.OffHand;
+                    //}
+                    break;
+                }
                 case InventoryType.Bag:
                 case InventoryType.Quiver:
                     yield return EquipSlot.Bag1;

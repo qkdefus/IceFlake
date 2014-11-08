@@ -5,6 +5,7 @@ using IceFlake.Client.Scripts;
 
 namespace IceFlake.Scripts
 {
+
     #region SpeedHackScript
 
     public class SpeedHackScript : Script

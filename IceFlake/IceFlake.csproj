@@ -39,19 +39,7 @@
     <Reference Include="MeshGenLib">
       <HintPath>..\MeshGenLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework">
-      <HintPath>..\Resources\Microsoft.Xna.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics">
-      <HintPath>..\Resources\Microsoft.Xna.Framework.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Resources\SlimDX.dll</HintPath>
-    </Reference>
-    <Reference Include="Squid">
-      <HintPath>..\Resources\Squid.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -80,6 +68,9 @@
     <Compile Include="Client\API\TradeSkill.cs" />
     <Compile Include="Client\API\Trainer.cs" />
     <Compile Include="Client\CDataStore.cs" />
+    <Compile Include="Client\Pather.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Client\Routines\Combat\HarmfulSpellRoutine.cs" />
     <Compile Include="Client\Routines\Combat\HelpfulSpellRoutine.cs" />
     <Compile Include="Client\Routines\Combat\SpellRoutine.cs" />
@@ -115,6 +106,7 @@
     <Compile Include="Client\Patchables\Descriptors.cs" />
     <Compile Include="Client\Patchables\Pointers.cs" />
     <Compile Include="Client\Patchables\Structures.cs" />
+    <Compile Include="Client\Collections\QuestCollection.cs" />
     <Compile Include="Client\WoWRaid.cs" />
     <Compile Include="Client\Scripts\Script.cs" />
     <Compile Include="Client\Scripts\ScriptManager.cs" />
@@ -122,19 +114,6 @@
     <Compile Include="DirectX\Direct3DAPI.cs" />
     <Compile Include="DirectX\IPulsable.cs" />
     <Compile Include="DirectX\Matrix.cs" />
-    <Compile Include="DirectX\Matrix3.cs" />
-    <Compile Include="DirectX\Squid\Framework\Game.cs" />
-    <Compile Include="DirectX\Squid\Framework\GameComponent.cs" />
-    <Compile Include="DirectX\Squid\Framework\GameTime.cs" />
-    <Compile Include="DirectX\Squid\Framework\NativeMethods.cs" />
-    <Compile Include="DirectX\Squid\GameGui.cs" />
-    <Compile Include="DirectX\Squid\InputManager.cs" />
-    <Compile Include="DirectX\Squid\MessageBox.cs" />
-    <Compile Include="DirectX\Squid\SampleDesktop.cs" />
-    <Compile Include="DirectX\Squid\SampleGame.cs" />
-    <Compile Include="DirectX\Squid\SampleScene.cs" />
-    <Compile Include="DirectX\Squid\SampleWindow.cs" />
-    <Compile Include="DirectX\Squid\SquidSlimDX.cs" />
     <Compile Include="DirectX\Vector3.cs" />
     <Compile Include="Routines\ElementalShamanRoutine.cs" />
     <Compile Include="Routines\StarterMageRoutine.cs" />
@@ -143,6 +122,7 @@
     <Compile Include="Client\Scripts\TerminateException.cs" />
     <Compile Include="Client\WoWWorld.cs" />
     <Compile Include="Client\WoWDB.cs" />
+    <Compile Include="Client\WoWQuest.cs" />
     <Compile Include="Client\WoWScript.cs" />
     <Compile Include="DirectX\Graphics.cs" />
     <Compile Include="DirectX\IResource.cs" />
@@ -161,11 +141,14 @@
     <Compile Include="Runtime\Extensions.cs" />
     <Compile Include="Scripts\ChatScript.cs" />
     <Compile Include="Scripts\ConsoleScript.cs" />
+    <Compile Include="Scripts\DebugScript.cs" />
     <Compile Include="Scripts\PacketScript.cs" />
+    <Compile Include="Scripts\QuestHelperScript.cs" />
     <Compile Include="Scripts\RenderingScripts.cs" />
     <Compile Include="Scripts\DumpersScripts.cs" />
     <Compile Include="Scripts\FishingScript.cs" />
     <Compile Include="Scripts\GuildRecruitScript.cs" />
+    <Compile Include="Scripts\HackScripts.cs" />
     <Compile Include="Scripts\LoginScript.cs" />
     <Compile Include="Scripts\RoutineScript.cs" />
     <Compile Include="Scripts\TalentScript.cs" />
@@ -185,41 +168,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="DirectX\Squid\Content\border.dds" />
-    <None Include="DirectX\Squid\Content\button_default.dds" />
-    <None Include="DirectX\Squid\Content\button_down.dds" />
-    <None Include="DirectX\Squid\Content\button_hot.dds" />
-    <None Include="DirectX\Squid\Content\checkbox_checked.dds" />
-    <None Include="DirectX\Squid\Content\checkbox_checked_hot.dds" />
-    <None Include="DirectX\Squid\Content\checkbox_default.dds" />
-    <None Include="DirectX\Squid\Content\checkbox_down.dds" />
-    <None Include="DirectX\Squid\Content\checkbox_hot.dds" />
-    <None Include="DirectX\Squid\Content\combo_button_default.dds" />
-    <None Include="DirectX\Squid\Content\combo_button_down.dds" />
-    <None Include="DirectX\Squid\Content\combo_button_hot.dds" />
-    <None Include="DirectX\Squid\Content\combo_default.dds" />
-    <None Include="DirectX\Squid\Content\combo_down.dds" />
-    <None Include="DirectX\Squid\Content\combo_hot.dds" />
-    <None Include="DirectX\Squid\Content\frame.dds" />
-    <None Include="DirectX\Squid\Content\handleNE.dds" />
-    <None Include="DirectX\Squid\Content\handleNW.dds" />
-    <None Include="DirectX\Squid\Content\hscrollUp_default.dds" />
-    <None Include="DirectX\Squid\Content\hscrollUp_down.dds" />
-    <None Include="DirectX\Squid\Content\hscrollUp_hot.dds" />
-    <None Include="DirectX\Squid\Content\hscroll_button.dds" />
-    <None Include="DirectX\Squid\Content\hscroll_button_down.dds" />
-    <None Include="DirectX\Squid\Content\hscroll_button_hot.dds" />
-    <None Include="DirectX\Squid\Content\hscroll_track.dds" />
-    <None Include="DirectX\Squid\Content\input_default.dds" />
-    <None Include="DirectX\Squid\Content\input_focused.dds" />
-    <None Include="DirectX\Squid\Content\vscrollUp_default.dds" />
-    <None Include="DirectX\Squid\Content\vscrollUp_down.dds" />
-    <None Include="DirectX\Squid\Content\vscrollUp_hot.dds" />
-    <None Include="DirectX\Squid\Content\vscroll_button.dds" />
-    <None Include="DirectX\Squid\Content\vscroll_button_down.dds" />
-    <None Include="DirectX\Squid\Content\vscroll_button_hot.dds" />
-    <None Include="DirectX\Squid\Content\vscroll_track.dds" />
-    <None Include="DirectX\Squid\Content\window.dds" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -303,25 +251,7 @@
   <ItemGroup>
     <None Include="Resources\Icons\report.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="DirectX\Squid\Content\Cursors\Arrow.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\Link.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\Move.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\Select.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\SizeNESW.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\SizeNS.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\SizeNWSE.png" />
-    <Content Include="DirectX\Squid\Content\Cursors\SizeWE.png" />
-    <Content Include="DirectX\Squid\Content\icons1.png" />
-    <Content Include="DirectX\Squid\Content\image.png" />
-    <Content Include="DirectX\Squid\Content\minimap.jpg" />
-    <Content Include="DirectX\Squid\Content\paperdoll.jpg" />
-    <Content Include="DirectX\Squid\Content\SampleMap.png" />
-    <Content Include="DirectX\Squid\Content\SampleMap.xml" />
-    <Content Include="DirectX\Squid\Content\slimdx_logo.png" />
-    <Content Include="DirectX\Squid\Content\TestImage.png" />
-    <Content Include="DirectX\Squid\Content\weapon-icons.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

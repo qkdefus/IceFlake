@@ -780,7 +780,7 @@ namespace IceFlake.Client.Patchables
     #region World related
 
     [Flags]
-    public enum CGWorldFrameHitFlags : uint
+    public enum TraceLineHitFlags : uint
     {
         HitTestBoundingModels = 1,
         HitTestGround = 0x100,
@@ -809,36 +809,23 @@ namespace IceFlake.Client.Patchables
 
     public enum ClickToMoveType
     {
-        //LeftClick = 0x1,
-        //Face = 0x2,
-        //Stop_ThrowsException = 0x3, // Throws a Lua error whenever used. Caused by event state mismatch!
-        //Move = 0x4,
-        //NpcInteract = 0x5,
-        //Loot = 0x6,
-        //ObjInteract = 0x7,
-        //Skin = 0x9,
-        //AttackPosition = 0xA,
-        //AttackGuid = 0xB,
-        //ConstantFace = 0xC,
-        //// This is actually unknown. Usually referenced with Face though.
-        //FaceOther = 0x8,
-        //None = 0xD
+        LeftClick = 0x1,
+        Face = 0x2,
+        Stop_ThrowsException = 0x3, // Throws a Lua error whenever used. Caused by event state mismatch!
+        Move = 0x4,
+        NpcInteract = 0x5,
+        Loot = 0x6,
+        ObjInteract = 0x7,
+        Skin = 0x9,
+        AttackPosition = 0xA,
+        AttackGuid = 0xB,
 
-        Attack = 16,
-        AttackGuid = 11,
-        AttackPosition = 10,
-        ConstantFace = 12,
-        Face = 2,
-        FaceOther = 8,
-        FaceTarget = 1,
-        Idle = 19,
-        Loot = 6,
-        Move = 4,
-        None = 13,
-        NpcInteract = 5,
-        ObjInteract = 7,
-        Skin = 9,
-        Stop = 3
+        ConstantFace = 0xC,
+
+        // This is actually unknown. Usually referenced with Face though.
+        FaceOther = 0x8,
+
+        None = 0xD
     }
 
     public enum TracelineResult
@@ -846,6 +833,7 @@ namespace IceFlake.Client.Patchables
         Collided,
         NoCollision
     }
+
 
     public enum InstanceType
     {
@@ -919,14 +907,14 @@ namespace IceFlake.Client.Patchables
         ForceAutoRunForward = 0x40,
 
         /// <summary>
-        /// Treat as disarmed?
-        /// Treat main and off hand weapons as not being equipped?
+        ///     Treat as disarmed?
+        ///     Treat main and off hand weapons as not being equipped?
         /// </summary>
         Flag_0x80 = 0x80,
 
         /// <summary>
-        /// Skip checks on ranged weapon?
-        /// Treat it as not being equipped?
+        ///     Skip checks on ranged weapon?
+        ///     Treat it as not being equipped?
         /// </summary>
         Flag_0x400 = 0x400,
 
@@ -1097,7 +1085,13 @@ namespace IceFlake.Client.Patchables
 
     #region Player related
 
-    public enum InstanceDifficulty : int
+    public enum DungeonDifficulty
+    {
+        Normal = 0,
+        Heroic = 1,
+    }
+
+    public enum RaidDifficulty
     {
         Normal10 = 0,
         Normal25 = 1,
@@ -1200,7 +1194,7 @@ namespace IceFlake.Client.Patchables
 
     public enum RuneType : uint
     {
-        Blood,
+        Blood = 0,
         Unholy,
         Frost,
         Death
@@ -1219,126 +1213,153 @@ namespace IceFlake.Client.Patchables
     public enum WoWCurrencyType
     {
         /// <summary>
-        /// Champion's Seals are the currency rewarded and used at the Argent Tournament.
-        /// They are accumulated by completing Argent Tournament daily quests, and can be exchanged with your faction's quartermasters for various rewards.
+        ///     Champion's Seals are the currency rewarded and used at the Argent Tournament.
+        ///     They are accumulated by completing Argent Tournament daily quests, and can be exchanged with your faction's
+        ///     quartermasters for various rewards.
         /// </summary>
         ChampionSeal = 241,
 
         /// <summary>
-        /// Chef's Awards are currency related to the Cooking skill. They can be earned by completing daily cooking quests in your faction's home city (Stormwind City / Orgrimmar).
-        /// They can be used to purchase new cooking recipes from the Sous Chef in your home city.
+        ///     Chef's Awards are currency related to the Cooking skill. They can be earned by completing daily cooking quests in
+        ///     your faction's home city (Stormwind City / Orgrimmar).
+        ///     They can be used to purchase new cooking recipes from the Sous Chef in your home city.
         /// </summary>
         ChefsAward = 402,
 
         /// <summary>
-        /// Conquest Points are the higher tier of PvP content rewards. They are earned from doing ranked arena matches and rated battlegrounds.
-        /// The lower tier currency, Honor Points, is earned from un-rated battlegrounds, un-ranked arena matches, honorable kills, and controlling Wintergrasp.
+        ///     Conquest Points are the higher tier of PvP content rewards. They are earned from doing ranked arena matches and
+        ///     rated battlegrounds.
+        ///     The lower tier currency, Honor Points, is earned from un-rated battlegrounds, un-ranked arena matches, honorable
+        ///     kills, and controlling Wintergrasp.
         /// </summary>
         ConquestPoints = 390,
 
         /// <summary>
-        /// Dalaran Cooking Awards are rewarded from level 80 daily cooking quests in Dalaran.
-        /// They can be used to purchase level 400-450 cooking recipes, as well as Northern Spices and the mighty Chef's Hat.
+        ///     Dalaran Cooking Awards are rewarded from level 80 daily cooking quests in Dalaran.
+        ///     They can be used to purchase level 400-450 cooking recipes, as well as Northern Spices and the mighty Chef's Hat.
         /// </summary>
         DalaranCookingAward = 81,
 
         /// <summary>
-        /// Dalaran Jewelcrafter's Tokens are rewarded from level 80 jewelcrafting daily quests in Dalaran.
-        /// They can be used to purchase level 370-450 jewelcrafting designs.
+        ///     Dalaran Jewelcrafter's Tokens are rewarded from level 80 jewelcrafting daily quests in Dalaran.
+        ///     They can be used to purchase level 370-450 jewelcrafting designs.
         /// </summary>
         DalaranJewelcraftersToken = 61,
 
         /// <summary>
-        /// Draenei Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Draenei fragments are all found in Outland.
+        ///     Draenei Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via
+        ///     surveying, saved up, and used to create the items listed below.
+        ///     Draenei fragments are all found in Outland.
         /// </summary>
         DraeneiArchaeologyFragment = 398,
 
         /// <summary>
-        /// Dwarf Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Dwarf fragments are found in centers of historical dwarven habitation, such as the Badlands, the Wetlands, and Loch Modan.
+        ///     Dwarf Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying,
+        ///     saved up, and used to create the items listed below.
+        ///     Dwarf fragments are found in centers of historical dwarven habitation, such as the Badlands, the Wetlands, and Loch
+        ///     Modan.
         /// </summary>
         DwarfArchaeologyFragment = 384,
 
         /// <summary>
-        /// Fossil Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Fossil fragments are usually found in locations such as Un'Goro Crater and Desolace.
+        ///     Fossil Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying,
+        ///     saved up, and used to create the items listed below.
+        ///     Fossil fragments are usually found in locations such as Un'Goro Crater and Desolace.
         /// </summary>
         FossilArchaeologyFragment = 393,
 
         /// <summary>
-        /// Honor Points are the lower tier of PvP content rewards. They have replaced all forms of pre 4.0 PvP rewards.
-        /// You can earn Honor Points from non-rated battlegrounds, unranked arenas, honorable kills, or from controlling Wintergrasp.
-        /// Rated battlegrounds and ranked arenas reward Conquest Points instead.
+        ///     Honor Points are the lower tier of PvP content rewards. They have replaced all forms of pre 4.0 PvP rewards.
+        ///     You can earn Honor Points from non-rated battlegrounds, unranked arenas, honorable kills, or from controlling
+        ///     Wintergrasp.
+        ///     Rated battlegrounds and ranked arenas reward Conquest Points instead.
         /// </summary>
         HonorPoints = 392,
 
         /// <summary>
-        /// Illustrious Jewelcrafter's Tokens are rewarded from faction-based daily quests in your factions home city (Stormwind City / Orgrimmar)
-        /// They can be used to purchase level 465-525 jewelcrafting designs from your faction's quartermaster.
+        ///     Illustrious Jewelcrafter's Tokens are rewarded from faction-based daily quests in your factions home city
+        ///     (Stormwind City / Orgrimmar)
+        ///     They can be used to purchase level 465-525 jewelcrafting designs from your faction's quartermaster.
         /// </summary>
         IllustriousJewelcrafterToken = 361,
 
         /// <summary>
-        /// Justice Points are a type of currency that is rewarded via participating in instanced PvE content, such as dungeons and raids, and is used to purchase tier sets.
-        /// Justice Points are the lower of the two tiers of PvE rewards, and are rewarded for completing your first random normal dungeon each day, as well as for defeating heroic bosses. Raid bosses, as well as the your first random heroic each day, reward Valor Points.
+        ///     Justice Points are a type of currency that is rewarded via participating in instanced PvE content, such as dungeons
+        ///     and raids, and is used to purchase tier sets.
+        ///     Justice Points are the lower of the two tiers of PvE rewards, and are rewarded for completing your first random
+        ///     normal dungeon each day, as well as for defeating heroic bosses. Raid bosses, as well as the your first random
+        ///     heroic each day, reward Valor Points.
         /// </summary>
         JusticePoints = 395,
 
         /// <summary>
-        /// Mark of the World Tree is the currency that will be used to unlock the The Regrowth and Molten Front Daily Quest Hubs at the player's discretion.
-        /// The currency will be rewarded in small amounts from the daily quests in the zone (similar to Champion's Seals) and will be spendable by the player in some manner in order to unlock more dailies and/or cause further storyline progression to occur.
-        /// This way players can experience the story and phasing at their own pace, rather than on a timeline or the pace of the rest of the sever.
+        ///     Mark of the World Tree is the currency that will be used to unlock the The Regrowth and Molten Front Daily Quest
+        ///     Hubs at the player's discretion.
+        ///     The currency will be rewarded in small amounts from the daily quests in the zone (similar to Champion's Seals) and
+        ///     will be spendable by the player in some manner in order to unlock more dailies and/or cause further storyline
+        ///     progression to occur.
+        ///     This way players can experience the story and phasing at their own pace, rather than on a timeline or the pace of
+        ///     the rest of the sever.
         /// </summary>
         MarkoftheWorldTree = 416,
 
         /// <summary>
-        /// Nerubian Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Nerubian fragments are all found in Northrend, typically in areas of Nerubian habitation such as Dragonblight.
+        ///     Nerubian Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via
+        ///     surveying, saved up, and used to create the items listed below.
+        ///     Nerubian fragments are all found in Northrend, typically in areas of Nerubian habitation such as Dragonblight.
         /// </summary>
         NerubianArchaeologyFragment = 400,
 
         /// <summary>
-        /// Night Elf Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Night elf fragments are typically found in areas such as Ashenvale and Darkshore.
+        ///     Night Elf Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via
+        ///     surveying, saved up, and used to create the items listed below.
+        ///     Night elf fragments are typically found in areas such as Ashenvale and Darkshore.
         /// </summary>
         NightElfArchaeologyFragment = 394,
 
         /// <summary>
-        /// Orc Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Orc fragments are exclusively found in Outland, particularly in areas such as Nagrand. If this confuses you, remember that orcs are native to Outland—they invaded Azeroth through the dark portal in the First War, detailed in the original Warcraft: Orcs and Humans.
+        ///     Orc Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying,
+        ///     saved up, and used to create the items listed below.
+        ///     Orc fragments are exclusively found in Outland, particularly in areas such as Nagrand. If this confuses you,
+        ///     remember that orcs are native to Outland—they invaded Azeroth through the dark portal in the First War, detailed in
+        ///     the original Warcraft: Orcs and Humans.
         /// </summary>
         OrcArchaeologyFragment = 397,
 
         /// <summary>
-        /// Tol Barad Commendations are the currency rewarded for completing daily quests in Tol Barad. These quests are unlocked when your faction controls the zone.
-        /// Tol Barad Commendations can be used to purchase rewards from your faction's Tol Barad Quartermaster.
+        ///     Tol Barad Commendations are the currency rewarded for completing daily quests in Tol Barad. These quests are
+        ///     unlocked when your faction controls the zone.
+        ///     Tol Barad Commendations can be used to purchase rewards from your faction's Tol Barad Quartermaster.
         /// </summary>
         TolBaradCommendation = 391,
 
         /// <summary>
-        /// Tol'vir Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Tol'vir fragments are exclusively found in level 80+ zones in Azeroth, particularly in areas such as Uldum.
+        ///     Tol'vir Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via
+        ///     surveying, saved up, and used to create the items listed below.
+        ///     Tol'vir fragments are exclusively found in level 80+ zones in Azeroth, particularly in areas such as Uldum.
         /// </summary>
         TolvirArchaeologyFragment = 401,
 
         /// <summary>
-        /// Troll Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Troll fragments are frequently found in areas such as The Hinterlands and Stranglethorn Vale.
+        ///     Troll Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying,
+        ///     saved up, and used to create the items listed below.
+        ///     Troll fragments are frequently found in areas such as The Hinterlands and Stranglethorn Vale.
         /// </summary>
         TrollArchaeologyFragment = 385,
 
         /// <summary>
-        /// Valor Points are a type of currency that is rewarded via participating in instanced PvE content, such as dungeons and raids, and is used to purchase tier sets.
-        /// Valor Points are the higher of the two tiers of PvE rewards, 
-        /// and are rewarded for completing your first random heroic dungeon each day, as well as for defeating raid bosses. 
-        /// Heroic bosses, as well as the your first random normal dungeon each day, reward Justice Points.
+        ///     Valor Points are a type of currency that is rewarded via participating in instanced PvE content, such as dungeons
+        ///     and raids, and is used to purchase tier sets.
+        ///     Valor Points are the higher of the two tiers of PvE rewards,
+        ///     and are rewarded for completing your first random heroic dungeon each day, as well as for defeating raid bosses.
+        ///     Heroic bosses, as well as the your first random normal dungeon each day, reward Justice Points.
         /// </summary>
         ValorPoints = 396,
 
         /// <summary>
-        /// Vrykul Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying, saved up, and used to create the items listed below.
-        /// Vrykul fragments are exclusively found in Northrend, especially in areas such as Howling Fjord and Icecrown.
+        ///     Vrykul Archaeology Fragments are discovered via the Survey ability in Archaeology. They are gathered via surveying,
+        ///     saved up, and used to create the items listed below.
+        ///     Vrykul fragments are exclusively found in Northrend, especially in areas such as Howling Fjord and Icecrown.
         /// </summary>
         VrykulArchaeologyFragment = 399
     }
@@ -1452,12 +1473,9 @@ namespace IceFlake.Client.Patchables
     public struct LockEntry
     {
         public uint ID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public uint[] Index;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public uint[] Skill;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public uint[] Type;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)] public uint[] Index;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)] public uint[] Skill;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)] public uint[] Type;
         //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         //public uint Action[];
     }
@@ -2548,26 +2566,8 @@ namespace IceFlake.Client.Patchables
         Quest
     }
 
-    public enum WoWPowerType // 3.3.5a: 12340 // qk
+    public enum WoWPowerType
     {
-        //Mana = 0,
-        //Rage = 1,
-        //Focus = 2,
-        //Energy = 3,
-        //Chi = 4,
-        //Runes = 5,
-        //RunicPower = 6,
-        //SoulShards = 7,
-        //Eclipse = 8,
-        //HolyPower = 9,
-        //Alternate = 10,
-        //DarkForce = 11,
-        //LightForce = 12,
-        //ShadowOrbs = 13,
-        //BurningEmbers = 14,
-        //DemonicFury = 15,
-        //ArcaneCharges = 16
-
         Mana = 0,
         Rage = 1,
         Focus = 2,
@@ -2937,6 +2937,13 @@ namespace IceFlake.Client.Patchables
         Heroic,
         Raid_10 = 88u,
         Raid_25
+    }
+
+    public enum QuestObjectiveType
+    {
+        Item = 0,
+        Creature = 1,
+        GameObject = 2
     }
 
     #endregion

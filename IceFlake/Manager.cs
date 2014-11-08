@@ -19,7 +19,7 @@ namespace IceFlake
         public static WoWDB DBC { get; private set; }
         public static Movement Movement { get; private set; }
         public static SpellCollection Spellbook { get; private set; }
-        //public static QuestCollection Quests { get; private set; }
+        public static QuestCollection Quests { get; private set; }
         public static WoWInventory Inventory { get; private set; }
         public static WoWCamera Camera { get; private set; }
         public static WoWEvents Events { get; private set; }
@@ -57,7 +57,7 @@ namespace IceFlake
             Helper.Initialize();
             Helper.FixInvalidPtrCheck();
             DBC = new WoWDB();
-            //Quests = new QuestCollection();
+            Quests = new QuestCollection();
             Inventory = new WoWInventory();
             Camera = new WoWCamera();
             Console = new WoWConsole();
