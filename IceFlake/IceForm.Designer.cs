@@ -88,10 +88,10 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabStatus);
             this.tabControl1.Controls.Add(this.tabScripts);
-            this.tabControl1.Controls.Add(this.tabDebug);
+            this.tabControl1.Controls.Add(this.tabStatus);
             this.tabControl1.Controls.Add(this.tabPath);
+            this.tabControl1.Controls.Add(this.tabDebug);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -105,7 +105,7 @@
             this.tabStatus.Location = new System.Drawing.Point(4, 22);
             this.tabStatus.Name = "tabStatus";
             this.tabStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStatus.Size = new System.Drawing.Size(326, 413);
+            this.tabStatus.Size = new System.Drawing.Size(376, 390);
             this.tabStatus.TabIndex = 2;
             this.tabStatus.Text = "Status";
             this.tabStatus.UseVisualStyleBackColor = true;
@@ -116,7 +116,7 @@
             this.gbPlayer.Dock = System.Windows.Forms.DockStyle.Left;
             this.gbPlayer.Location = new System.Drawing.Point(3, 3);
             this.gbPlayer.Name = "gbPlayer";
-            this.gbPlayer.Size = new System.Drawing.Size(184, 407);
+            this.gbPlayer.Size = new System.Drawing.Size(184, 384);
             this.gbPlayer.TabIndex = 0;
             this.gbPlayer.TabStop = false;
             this.gbPlayer.Text = "Player";
@@ -142,7 +142,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(178, 388);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(178, 365);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -287,7 +287,7 @@
             this.tabDebug.Location = new System.Drawing.Point(4, 22);
             this.tabDebug.Name = "tabDebug";
             this.tabDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDebug.Size = new System.Drawing.Size(326, 413);
+            this.tabDebug.Size = new System.Drawing.Size(376, 390);
             this.tabDebug.TabIndex = 1;
             this.tabDebug.Text = "Debug";
             this.tabDebug.UseVisualStyleBackColor = true;
@@ -345,7 +345,7 @@
             this.tabPath.Location = new System.Drawing.Point(4, 22);
             this.tabPath.Name = "tabPath";
             this.tabPath.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPath.Size = new System.Drawing.Size(376, 413);
+            this.tabPath.Size = new System.Drawing.Size(376, 390);
             this.tabPath.TabIndex = 3;
             this.tabPath.Text = "Pathing";
             this.tabPath.UseVisualStyleBackColor = true;

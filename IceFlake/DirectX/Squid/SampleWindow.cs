@@ -50,6 +50,7 @@ namespace SampleControls
         {
             Button = new Button();
             Button.Size = new Point(30, 30);
+            
             Button.Style = "button";
             Button.Tooltip = "Close Window";
             Button.Dock = DockStyle.Right;

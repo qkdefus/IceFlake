@@ -179,7 +179,11 @@ namespace SampleControls
             SampleWindow window1 = new SampleWindow();
             window1.Size = new Squid.Point(440, 340);
             window1.Position = new Squid.Point(40, 40);
-            window1.Titlebar.Text = "Anchoring, [color=FfFfFf00]DropDown, Modal Dialog[/color]";
+            //window1.Titlebar.Text = "IceQK, [color=FfFfFf00]DropDown, Modal Dialog[/color]";
+            //window1.Titlebar.TextColor = System.Drawing.Color.Red.ToArgb();
+
+            window1.Titlebar.Text = "IceQK";
+
             window1.Resizable = true;
             window1.Parent = this;
 

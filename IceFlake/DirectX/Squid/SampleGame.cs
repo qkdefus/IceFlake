@@ -9,7 +9,6 @@ namespace SquidSlimDX
     {
         protected override void Initialize()
         {
-            //GuiHost.Renderer = new RendererSlimDX(Device);
             GuiHost.Renderer = new RendererSlimDX(D3D.Device);
 
             //InputManager input = new InputManager(this);
@@ -24,7 +23,6 @@ namespace SquidSlimDX
         protected override void DeviceReset()
         {
             GuiHost.Renderer.Dispose();
-            //GuiHost.Renderer = new RendererSlimDX(Device);
             GuiHost.Renderer = new RendererSlimDX(D3D.Device);
 
             base.DeviceReset();

@@ -57,20 +57,20 @@ namespace IceFlake.Scripts
         public override void OnStart()
         {
             //InitializeD3D();
-            if (!Manager.ObjectManager.IsInGame)
-            {
-                Stop();
-                return;
-            }
+            //if (!Manager.ObjectManager.IsInGame)
+            //{
+            //    Stop();
+            //    return;
+            //}
         }
 
         public override void OnTerminate()
         {
-            if (!Manager.ObjectManager.IsInGame)
-            {
-                Stop();
-                return;
-            }
+            //if (!Manager.ObjectManager.IsInGame)
+            //{
+            //    Stop();
+            //    return;
+            //}
         }
 
         public override void OnTick()

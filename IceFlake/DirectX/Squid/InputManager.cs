@@ -88,9 +88,8 @@ namespace SquidSlimDX
 
             Buffer.Clear();
 
-            //System.Drawing.Point p = Game.Form.PointToClient(System.Windows.Forms.Cursor.Position);
             System.Drawing.Point p = Game.Form.PointToClient(System.Windows.Forms.Cursor.Position);
-
+            //System.Drawing.Point p = new System.Drawing.Point(100, 100);
 
             GuiHost.SetMouse(p.X, p.Y, Wheel);
             GuiHost.SetButtons(Buttons);
