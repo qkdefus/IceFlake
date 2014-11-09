@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;#SLIMDX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -36,7 +36,8 @@
     <StartupObject>IceFlake.EntryPoint</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Lab.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MeshGenLib">
@@ -125,8 +126,18 @@
     <Compile Include="Client\Scripts\ScriptThread.cs" />
     <Compile Include="DirectX\Direct3DAPI.cs" />
     <Compile Include="DirectX\IPulsable.cs" />
-    <Compile Include="DirectX\Matrix.cs" />
-    <Compile Include="DirectX\Vector3.cs" />
+    <Compile Include="DirectX\Squid\Framework\Game.cs" />
+    <Compile Include="DirectX\Squid\Framework\GameComponent.cs" />
+    <Compile Include="DirectX\Squid\Framework\GameTime.cs" />
+    <Compile Include="DirectX\Squid\Framework\NativeMethods.cs" />
+    <Compile Include="DirectX\Squid\GameGui.cs" />
+    <Compile Include="DirectX\Squid\InputManager.cs" />
+    <Compile Include="DirectX\Squid\MessageBox.cs" />
+    <Compile Include="DirectX\Squid\SampleDesktop.cs" />
+    <Compile Include="DirectX\Squid\SampleGame.cs" />
+    <Compile Include="DirectX\Squid\SampleScene.cs" />
+    <Compile Include="DirectX\Squid\SampleWindow.cs" />
+    <Compile Include="DirectX\Squid\SquidSlimDX.cs" />
     <Compile Include="Routines\ElementalShamanRoutine.cs" />
     <Compile Include="Routines\StarterMageRoutine.cs" />
     <Compile Include="Routines\TotemHelper.cs" />
@@ -165,6 +176,7 @@
     <Compile Include="Scripts\TalentScript.cs" />
     <Compile Include="Scripts\UITestScript.cs" />
     <Compile Include="Scripts\VendorScript.cs" />
+    <Compile Include="Scripts\_QKDrawMenuSquid.cs" />
     <Compile Include="Scripts\_QKHackScripts.cs" />
     <EmbeddedResource Include="IceForm.resx">
       <DependentUpon>IceForm.cs</DependentUpon>
@@ -180,6 +192,111 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DirectX\Squid\Content\border.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\button_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\button_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\button_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\checkbox_checked.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\checkbox_checked_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\checkbox_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\checkbox_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\checkbox_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\combo_button_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\combo_button_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\combo_button_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\combo_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\combo_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\combo_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\frame.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\handleNE.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\handleNW.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscrollUp_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscrollUp_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscrollUp_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscroll_button.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscroll_button_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscroll_button_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\hscroll_track.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\input_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\input_focused.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscrollUp_default.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscrollUp_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscrollUp_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscroll_button.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscroll_button_down.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscroll_button_hot.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\vscroll_track.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DirectX\Squid\Content\window.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -264,6 +381,57 @@
     <None Include="Resources\Icons\report.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DirectX\Squid\Content\Cursors\Arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\Link.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\Move.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\Select.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\SizeNESW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\SizeNS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\SizeNWSE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\Cursors\SizeWE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\icons1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\minimap.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\paperdoll.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\SampleMap.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\SampleMap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\slimdx_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\TestImage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DirectX\Squid\Content\weapon-icons.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lab.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

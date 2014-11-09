@@ -1,5 +1,5 @@
 ﻿
-#if SLIMDX
+// #if SLIMDX
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,4 +34,4 @@ namespace IceFlake.DirectX
 
     }
 }
-#endif
+// #endif

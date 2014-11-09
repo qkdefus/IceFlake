@@ -2,12 +2,12 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
-#if SLIMDX
+// #if SLIMDX
 using SlimDX;
-#else
+// #else
 using IceFlake.DirectX;
 
-#endif
+// #endif
 
 namespace IceFlake.Client
 {

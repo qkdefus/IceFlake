@@ -1,7 +1,7 @@
-﻿#if SLIMDX
+﻿// #if SLIMDX
 using SlimDX;
 using SlimDX.Direct3D9;
-#endif
+// #endif
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,9 +21,9 @@ namespace IceFlake.DirectX
         public static event EventHandler OnFirstFrame;
         public static event EventHandler OnLastFrame = (sender, e) => FrameQueueFinalized.Set();
 
-#if SLIMDX
+// #if SLIMDX
         public static Device Device { get; private set; }
-#endif
+// #endif
 
         private static int EndSceneHook(IntPtr device)
         {
@@ -34,16 +34,16 @@ namespace IceFlake.DirectX
                     Log.WriteLine("[D] OnLastFrame");
                     if (OnLastFrame != null)
                         OnLastFrame(null, new EventArgs());
-#if SLIMDX
+// #if SLIMDX
                     Device = null;
-#endif
+// #endif
                 }
                 else
                 {
-#if SLIMDX
+// #if SLIMDX
                     if (Device == null)
                         Device = Device.FromPointer(device);
-#endif
+// #endif
 
                     if (FrameCount == 0)
                         if (OnFirstFrame != null)
@@ -68,9 +68,9 @@ namespace IceFlake.DirectX
 
         private static int ResetHook(IntPtr device, Direct3DAPI.PresentParameters pp)
         {
-#if SLIMDX
+// #if SLIMDX
             Device = null;
-#endif
+// #endif
             return (int) _resetHook.CallOriginal(device, pp);
         }
 
@@ -101,7 +101,7 @@ namespace IceFlake.DirectX
 
         private static void PrepareRenderState()
         {
-#if SLIMDX
+// #if SLIMDX
             if (Device == null)
                 return;
 
@@ -131,7 +131,7 @@ namespace IceFlake.DirectX
             Device.SetRenderState(RenderState.CullMode, Cull.None);
 
             //preRenderState.Apply();
-#endif
+// #endif
         }
 
         private static readonly LinkedList<IPulsable> _pulsables = new LinkedList<IPulsable>();

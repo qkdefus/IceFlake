@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using IceFlake.Client;
-#if SLIMDX
+// #if SLIMDX
 using SlimDX;
-#else
+// #else
 using IceFlake.DirectX;
-#endif
+// #endif
 
 namespace IceFlake.Runtime
 {
