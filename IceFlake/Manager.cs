@@ -45,24 +45,23 @@ namespace IceFlake
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-
             Direct3D.RegisterCallbacks(
-                //ObjectManager = new ObjectManager(),
+                ObjectManager = new ObjectManager(),
                 ExecutionQueue = new EndSceneExecute(),
-                //Movement = new Movement(),
-                //Events = new WoWEvents(),
-                //Spellbook = new SpellCollection(),
+                Movement = new Movement(),
+                Events = new WoWEvents(),
+                Spellbook = new SpellCollection(),
                 Scripts = new ScriptManager()
                 );
 
-            //Helper.Initialize();
+            Helper.Initialize();
             Helper.FixInvalidPtrCheck();
-            //DBC = new WoWDB();
-            //Quests = new QuestCollection();
-            //Inventory = new WoWInventory();
-            //Camera = new WoWCamera();
-            //Console = new WoWConsole();
-            //ClientServices = new WoWClientServices();
+            DBC = new WoWDB();
+            Quests = new QuestCollection();
+            Inventory = new WoWInventory();
+            Camera = new WoWCamera();
+            Console = new WoWConsole();
+            ClientServices = new WoWClientServices();
 
             sw.Stop();
             Log.WriteLine(LogType.Good, "Initialization took {0} ms", sw.ElapsedMilliseconds);
