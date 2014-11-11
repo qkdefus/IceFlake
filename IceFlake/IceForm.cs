@@ -88,6 +88,7 @@ namespace IceFlake
                 btnScriptStop.Enabled = false;
             }
 
+            /*/
             if (!Manager.ObjectManager.IsInGame)
                 return;
 
@@ -104,6 +105,7 @@ namespace IceFlake
             catch
             {
             }
+             */
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -120,7 +122,11 @@ namespace IceFlake
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
+            //string lua2 = tbLUA.Text;
+            //string lua = "print(\"\\124TInterface\\\\Minimap\\\\CompassNorthTag:14\\124t " + lua2 + "\")";
+
             string lua = tbLUA.Text;
+
             if (string.IsNullOrEmpty(lua))
                 return;
             Manager.ExecutionQueue.AddExececution(() =>

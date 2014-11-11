@@ -53,6 +53,9 @@ namespace IceFlake.Client.Objects
             if (Direct3D.FrameCount == 0)
             {
                 Log.WriteLine("LocalPlayer:");
+
+                Log.WriteLine("\tPointer {0}", pointer);
+
                 Log.WriteLine("\tLevel {0} {1} {2}", Level, Race, Class);
                 Log.WriteLine("\tHealth: {0}/{1} ({2}%)", Health, MaxHealth, (int) HealthPercentage);
                 Log.WriteLine("\t{0}: {1}/{2} ({3}%)", PowerType, Power, MaxPower, (int) PowerPercentage);

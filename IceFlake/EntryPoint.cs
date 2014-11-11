@@ -11,15 +11,20 @@ namespace IceFlake
         [STAThread]
         public static void Main(string[] args)
         {
+
+
             FileLogger.Instance = new FileLogger();
             Log.WriteLine(LogType.Information, "Initializing IceFlake");
             Application.ApplicationExit += OnApplicationExit;
             AppDomain.CurrentDomain.UnhandledException += LogUnhandledException;
+
             Manager.Initialize();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(AppForm = new IceForm());
+
+
         }
 
         private static void OnApplicationExit(object sender, EventArgs e)

@@ -44,9 +44,9 @@ namespace IceFlake.Scripts
 {
     #region DrawMeshScript
 
-    public class QKDrawMenuScript : Script
+    public class QKDrawMenuSquidScript : Script
     {
-        public QKDrawMenuScript(): base("QK", "_QKDrawMenuScript"){ }
+        public QKDrawMenuSquidScript(): base("QK", "_QKDrawMenuSquidScript"){ }
 
         /// <summary>
         /// ///////////////////////////////

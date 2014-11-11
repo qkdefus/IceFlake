@@ -11,15 +11,25 @@ namespace IceFlake.Scripts
 {
     #region SpeedHackScript //qk (Protected Memory)
 
-    public class SpeedHackScript : Script
+
+    // world clock speed 0x00D37FC8
+    // disable spellcasting 00807D1E
+
+
+    public class QKSpeedHackScriptV1: Script
     {
-        public SpeedHackScript()
-            : base("Speed Hack", "Hack")
+        public QKSpeedHackScriptV1()
+            : base("Hack", "_QKSpeedHack V1")
         { }
 
         private readonly IntPtr POINTER = new IntPtr(0x6F14A8);
         private const uint START_SPEED = 0x9000E6C1;
-        private const uint SPEED_MODIFIER = 3; // Max 5
+        private const uint SPEED_MODIFIER = 5; // Max 5
+
+        // default         // 1652473989
+        // 1x = 0x9000e6c1 // 2415978177
+        // 2x = 0x9001f6c1 // 2416047809
+        // 5x = 0x9002f6c1 // 2416113345
 
         public override void OnStart()
         {
@@ -45,12 +55,12 @@ namespace IceFlake.Scripts
 
     #endregion 
 
-    #region SpeedHackScript // qk NEW
+    #region QKSpeedHackScriptV2 // qk NEW
 
-    public class QKSpeedHackScript : Script
+    public class QKSpeedHackScriptV2 : Script
     {
-        public QKSpeedHackScript()
-            : base("Hack", "_QKSpeedHack")
+        public QKSpeedHackScriptV2()
+            : base("Hack", "_QKSpeedHack V2")
         { }
 
         private float SPEED_MODIFIER = 200; // Default 7 // Max 20000++
@@ -71,6 +81,76 @@ namespace IceFlake.Scripts
         public override void OnTerminate()
         {
             Print("Removing speed hack");
+        }
+    }
+
+    #endregion
+
+    #region QKSpeedHackScriptV3 // qk NEW
+
+    public class QKSpeedHackScriptV3 : Script
+    {
+        public QKSpeedHackScriptV3()
+            : base("Hack", "_QKSpeedHack V3")
+        { }
+
+        private float SPEED_MODIFIER = 200; // Default 7 // Max 20000++
+        private float DEFAULT_VALUE = 7;
+
+        public override void OnStart()
+        {
+            if (!Manager.ObjectManager.IsInGame)
+                return;
+
+            Print("Applying speed hack");
+        }
+
+        public override void OnTick()
+        {
+            DEFAULT_VALUE = Manager.Memory.Read<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x814));
+            Manager.Memory.Write<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x814), SPEED_MODIFIER);
+        }
+
+        public override void OnTerminate()
+        {
+            Print("Removing speed hack");
+        }
+    }
+
+    #endregion
+
+    #region QKSpeedHackScriptV4 // qk NEW
+
+    public class QKSpeedHackScriptV4 : Script
+    {
+        public QKSpeedHackScriptV4()
+            : base("Hack", "_QKSpeedHack V4")
+        { }
+
+        private float SPEED_MODIFIER = 200; // Default 7 // Max 20000++
+        private float DEFAULT_VALUE = 7;
+
+        public override void OnStart()
+        {
+            if (!Manager.ObjectManager.IsInGame)
+                return;
+
+            Print("Applying speed hack");
+
+            DEFAULT_VALUE = Manager.Memory.Read<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C));
+            Manager.Memory.Write<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C), SPEED_MODIFIER);
+        }
+
+        public override void OnTick()
+        {
+
+        }
+
+        public override void OnTerminate()
+        {
+            Print("Removing speed hack");
+
+            Manager.Memory.Write<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C), DEFAULT_VALUE);
         }
     }
 
@@ -132,9 +212,6 @@ namespace IceFlake.Scripts
             // 007D889B <- change jg to je
             // 007D889B - 0F8F 4A050000         - jg 007D8DEB
             // 007D889B - 0F84 4A050000         - je 007D8DEB
-
-
-
 
             Manager.Memory.WriteBytes(new IntPtr(0x7D889B), BitConverter.GetBytes(0x054a840f));
             Print("Applying ADTCollision hack");
@@ -282,8 +359,6 @@ namespace IceFlake.Scripts
                 return;
 
             //0050599F - 72 11                 - jb 005059B2
-            //Default_Bytes = BitConverter.GetBytes(Manager.Memory.Read<uint>((IntPtr)0x0075E439));
-
             Manager.Memory.WriteBytes(new IntPtr(0x0050599F), BitConverter.GetBytes(0x558b9090));
 
             Print("Applying Language Patch");

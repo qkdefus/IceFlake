@@ -6,11 +6,16 @@ namespace IceFlake.Scripts
     public class LoginScript : Script
     {
         private const string
-            EMAIL = "E-Mail",
-            PASSWORD = "Password",
-            ACCOUNT = "WoW1",
-            REALM = "Realm",
-            CHARACTER = "Character";
+            //EMAIL = "E-Mail",
+            //PASSWORD = "Password",
+            //ACCOUNT = "WoW1",
+            //REALM = "Realm",
+            //CHARACTER = "Character";
+            EMAIL = "qkdefus",
+            PASSWORD = "abc123",
+            ACCOUNT = "qkdefus",
+            REALM = "MaNGOS (PVP)",
+            CHARACTER = "Løken";
 
         public LoginScript()
             : base("Login", "Uncatalogued")

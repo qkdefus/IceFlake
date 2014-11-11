@@ -138,6 +138,8 @@
     <Compile Include="DirectX\Squid\SampleScene.cs" />
     <Compile Include="DirectX\Squid\SampleWindow.cs" />
     <Compile Include="DirectX\Squid\SquidSlimDX.cs" />
+    <Compile Include="DirectX\Vector3D.cs" />
+    <Compile Include="DirectX\Vector2D.cs" />
     <Compile Include="Routines\ElementalShamanRoutine.cs" />
     <Compile Include="Routines\StarterMageRoutine.cs" />
     <Compile Include="Routines\TotemHelper.cs" />
@@ -176,8 +178,14 @@
     <Compile Include="Scripts\TalentScript.cs" />
     <Compile Include="Scripts\UITestScript.cs" />
     <Compile Include="Scripts\VendorScript.cs" />
+    <Compile Include="Scripts\_QKDrawLineScript.cs" />
+    <Compile Include="Scripts\_QKPlayerTitleScript.cs" />
+    <Compile Include="Scripts\_QKCooldDownScript.cs" />
+    <Compile Include="Scripts\_QKDrawMenuBasic.cs" />
     <Compile Include="Scripts\_QKDrawMenuSquid.cs" />
     <Compile Include="Scripts\_QKHackScripts.cs" />
+    <Compile Include="Scripts\_QKTestScript.cs" />
+    <Compile Include="Scripts\_QKTestWarden.cs" />
     <EmbeddedResource Include="IceForm.resx">
       <DependentUpon>IceForm.cs</DependentUpon>
       <SubType>Designer</SubType>

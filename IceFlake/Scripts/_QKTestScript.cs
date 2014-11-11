@@ -26,6 +26,17 @@ namespace IceFlake.Scripts
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CMovementDelegate(IntPtr ptr, float x, float y, float z);
 
@@ -109,7 +120,18 @@ namespace IceFlake.Scripts
 
 
 
+        //unsigned int __cdecl sub_72D4F0(int arg0, unsigned int arg4, char *a3, int a2, unsigned int a5)
+        public static uint GmNameTagStringFunction = 0x0072D4F0;
+        //[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        //public delegate void GmNameTagStringFunctionDelegate(uint arg0, uint arg4, string a3, int a2, uint a5);
+        public static GmNameTagStringFunctionDelegate C_GmNameTagStringFunction;
 
+
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public delegate int GmNameTagStringFunctionDelegate(
+            uint ptr, uint buffer, uint arg4,
+            [MarshalAs(UnmanagedType.LPStr)] string a3, int a2, uint a5);
 
 
 
@@ -118,8 +140,21 @@ namespace IceFlake.Scripts
             if (!Manager.ObjectManager.IsInGame)
                 return;
 
+            return;
 
 
+            //char _c = new char();
+
+            //char _c = 'n';
+            string _c = "kuk";
+
+
+            C_GmNameTagStringFunction = Manager.Memory.RegisterDelegate<GmNameTagStringFunctionDelegate>((IntPtr)GmNameTagStringFunction);
+            C_GmNameTagStringFunction((uint)Manager.LocalPlayer.Pointer, 0, 0, _c, 0, 10);
+
+            Log.WriteLine("test done");
+
+            return;
 
 
 
@@ -153,7 +188,7 @@ namespace IceFlake.Scripts
 
 
 
-
+            
             // Facing
             _handleTrackingFacing2 = Manager.Memory.RegisterDelegate<HandleTracking2FacingDelegate>((IntPtr)HandleTrackingFacing2_Offset);
             _handleTrackingFacing2((uint)Manager.LocalPlayer.Pointer, (uint)Helper.PerformanceCount, (Manager.LocalPlayer.R + 0.5f));
@@ -317,23 +352,23 @@ namespace IceFlake.Scripts
 
 
 
-            var unit = Manager.LocalPlayer.Target as WoWUnit;
-            Print("\t Target : " + unit.Name);
-            Print("\t Class : " + unit.Class);
-            Print("\t Classification : " + unit.Classification);
-            Print("\t Classification_qk : " + unit.Classification_qk);
-            Print("\t PowerType : " + unit.PowerType);
-            Print("\t Power : " + unit.Power);
-            Print("\t Runes : " + unit.Runes);
-            Print("\t RunicPower : " + unit.RunicPower);
-            Print("\t Energy : " + unit.Energy);
+            //var unit = Manager.LocalPlayer.Target as WoWUnit;
+            //Print("\t Target : " + unit.Name);
+            //Print("\t Class : " + unit.Class);
+            //Print("\t Classification : " + unit.Classification);
+            //Print("\t Classification_qk : " + unit.Classification_qk);
+            //Print("\t PowerType : " + unit.PowerType);
+            //Print("\t Power : " + unit.Power);
+            //Print("\t Runes : " + unit.Runes);
+            //Print("\t RunicPower : " + unit.RunicPower);
+            //Print("\t Energy : " + unit.Energy);
 
 
 
-            Print("\t -");
-            Print("\t IsFlying : " + unit.IsFlying);
-            Print("\t IsFlyingCapable : " + unit.IsFlyingCapable);
-            Print("\t -");
+            //Print("\t -");
+            //Print("\t IsFlying : " + unit.IsFlying);
+            //Print("\t IsFlyingCapable : " + unit.IsFlyingCapable);
+            //Print("\t -");
 
 
             return;
@@ -347,16 +382,16 @@ namespace IceFlake.Scripts
 
 
 
-            foreach (Client.Chat.ChatMessageStruct ch in Client.Chat.WoWChat)
-            {
-                Print("Player : " + ch.Player);
-                Print("Message : " + ch.Message);
-                Print("Channel : " + ch.Channel);
-                //Print("FormattedMsg : " + ch.FormattedMsg);
-                Print("Type : " + ch.Type);
-                Print("--");
-            }
-            Print("Chat Dump End");
+            //foreach (Client.Chat.ChatMessageStruct ch in Client.Chat.WoWChat)
+            //{
+            //    Print("Player : " + ch.Player);
+            //    Print("Message : " + ch.Message);
+            //    Print("Channel : " + ch.Channel);
+            //    //Print("FormattedMsg : " + ch.FormattedMsg);
+            //    Print("Type : " + ch.Type);
+            //    Print("--");
+            //}
+            //Print("Chat Dump End");
 
             return;
 
@@ -378,10 +413,10 @@ namespace IceFlake.Scripts
 
 
 
-            Interface.SetRenderTerrain(true);
-            Interface.SetAutoLoot(true);
-            Interface.SetClickToMove(true);
-            Interface.SetAutoSelfCast(true);
+            //Interface.SetRenderTerrain(true);
+            //Interface.SetAutoLoot(true);
+            //Interface.SetClickToMove(true);
+            //Interface.SetAutoSelfCast(true);
 
             return;
 

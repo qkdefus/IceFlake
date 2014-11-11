@@ -11,6 +11,9 @@ namespace IceFlake.DirectX
 {
     public static class Direct3D
     {
+        private const int VMT_ENDSCENE = 42;
+        private const int VMT_RESET = 16;
+
         private static Direct3DAPI.Direct3D9EndScene _endSceneDelegate;
         private static Detour _endSceneHook;
         private static Detour _resetHook;
@@ -49,7 +52,7 @@ namespace IceFlake.DirectX
                         if (OnFirstFrame != null)
                             OnFirstFrame(null, new EventArgs());
 
-                    PrepareRenderState();
+                    //PrepareRenderState();
 
                     foreach (IPulsable pulsable in _pulsables)
                         pulsable.Direct3D_EndScene();
@@ -74,17 +77,41 @@ namespace IceFlake.DirectX
             return (int) _resetHook.CallOriginal(device, pp);
         }
 
+        //public static void Initialize()
+        //{
+        //    FrameQueueFinalized = new ManualResetEventSlim(false);
+
+        //    IntPtr endScenePointer = GetEndScenePointer();
+
+        //    _endSceneDelegate = Manager.Memory.RegisterDelegate<Direct3DAPI.Direct3D9EndScene>(endScenePointer);
+        //    _endSceneHook = Manager.Memory.Detours.CreateAndApply(_endSceneDelegate,
+        //        new Direct3DAPI.Direct3D9EndScene(EndSceneHook), "EndScene");
+
+        //    Log.WriteLine("Direct3D9x:");
+        //    Log.WriteLine("\tEndScene: 0x{0:X}", endScenePointer);
+        //}
+
         public static void Initialize()
         {
             FrameQueueFinalized = new ManualResetEventSlim(false);
 
-            IntPtr endScenePointer = GetEndScenePointer();
+            var endScenePointer = IntPtr.Zero;
+            var resetPointer = IntPtr.Zero;
+            using (var d3d = new SlimDX.Direct3D9.Direct3D())
+            {
+                using (var tmpDevice = new Device(d3d, 0, DeviceType.Hardware, IntPtr.Zero, CreateFlags.HardwareVertexProcessing, new PresentParameters() { BackBufferWidth = 1, BackBufferHeight = 1 }))
+                {
+                    endScenePointer = Manager.Memory.GetObjectVtableFunction(tmpDevice.ComPointer, VMT_ENDSCENE);
+                    resetPointer = Manager.Memory.GetObjectVtableFunction(tmpDevice.ComPointer, VMT_RESET);
+                }
+            }
             _endSceneDelegate = Manager.Memory.RegisterDelegate<Direct3DAPI.Direct3D9EndScene>(endScenePointer);
-            _endSceneHook = Manager.Memory.Detours.CreateAndApply(_endSceneDelegate,
-                new Direct3DAPI.Direct3D9EndScene(EndSceneHook), "EndScene");
+            _endSceneHook = Manager.Memory.Detours.CreateAndApply(_endSceneDelegate, new Direct3DAPI.Direct3D9EndScene(EndSceneHook), "D9EndScene");
 
             Log.WriteLine("Direct3D9x:");
             Log.WriteLine("\tEndScene: 0x{0:X}", endScenePointer);
+
+            System.Windows.Forms.MessageBox.Show("balle");
         }
 
         public static void Shutdown()
@@ -155,8 +182,10 @@ namespace IceFlake.DirectX
 
         private static IntPtr GetEndScenePointer()
         {
+            //System.Windows.Forms.MessageBox.Show("kuk");
+
             // Device
-            var ptr = Manager.Memory.Read<IntPtr>((IntPtr) 0xC5DF88);
+            var ptr = Manager.Memory.Read<IntPtr>((IntPtr)0xC5DF88);
             ptr = Manager.Memory.Read<IntPtr>(IntPtr.Add(ptr, 0x397C));
 
             // Scene
