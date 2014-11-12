@@ -140,5 +140,14 @@ namespace IceFlake.DirectX
             if (_pulsables.Contains(pulsable))
                 _pulsables.Remove(pulsable);
         }
+
+
+
+
+
+
+
+
+
     }
 }

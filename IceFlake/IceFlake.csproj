@@ -178,6 +178,7 @@
     <Compile Include="Scripts\TalentScript.cs" />
     <Compile Include="Scripts\UITestScript.cs" />
     <Compile Include="Scripts\VendorScript.cs" />
+    <Compile Include="Scripts\_QKDrawLineScriptV2.cs" />
     <Compile Include="Scripts\_QKDrawLineScript.cs" />
     <Compile Include="Scripts\_QKPlayerTitleScript.cs" />
     <Compile Include="Scripts\_QKCooldDownScript.cs" />
@@ -200,6 +201,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="DirectX\Squid\Content\border.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -440,7 +442,6 @@
     <Content Include="DirectX\Squid\Content\weapon-icons.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Lab.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
