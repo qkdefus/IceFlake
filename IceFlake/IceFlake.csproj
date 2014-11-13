@@ -40,6 +40,16 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gwen">
+      <HintPath>..\Resources\Gwen.dll</HintPath>
+    </Reference>
+    <Reference Include="Gwen.Renderer.OpenTK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\Gwen.Renderer.OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Gwen.UnitTest">
+      <HintPath>..\Resources\Gwen.UnitTest.dll</HintPath>
+    </Reference>
     <Reference Include="MeshGenLib">
       <HintPath>..\MeshGenLib.dll</HintPath>
     </Reference>
@@ -48,6 +58,10 @@
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics">
       <HintPath>..\Resources\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -125,6 +139,35 @@
     <Compile Include="Client\Scripts\ScriptManager.cs" />
     <Compile Include="Client\Scripts\ScriptThread.cs" />
     <Compile Include="DirectX\Direct3DAPI.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Button.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\CheckBox.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\CollapsibleList.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\ColorPickers.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\ComboBox.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\CrossSplitter.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Docking.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\GroupBox.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\GUnit.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\ImagePanel.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Label.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\ListBox.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Menu.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\NumericUpDown.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\ProgressBar.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Properties.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\RadioButton.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\RichLabel.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\ScrollControl.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Slider.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\StatusBar.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\TabControl.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\TextBox.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\TreeControl.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\UnitTest.cs" />
+    <Compile Include="DirectX\Gwen\Gwen.UnitTest\Window.cs" />
+    <Compile Include="DirectX\Gwen\SampleWindow.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DirectX\IPulsable.cs" />
     <Compile Include="DirectX\Squid\Framework\Game.cs" />
     <Compile Include="DirectX\Squid\Framework\GameComponent.cs" />
@@ -134,7 +177,9 @@
     <Compile Include="DirectX\Squid\InputManager.cs" />
     <Compile Include="DirectX\Squid\MessageBox.cs" />
     <Compile Include="DirectX\Squid\SampleDesktop.cs" />
-    <Compile Include="DirectX\Squid\SampleGame.cs" />
+    <Compile Include="DirectX\Squid\SampleGame.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DirectX\Squid\SampleScene.cs" />
     <Compile Include="DirectX\Squid\SampleWindow.cs" />
     <Compile Include="DirectX\Squid\SquidSlimDX.cs" />
@@ -178,6 +223,7 @@
     <Compile Include="Scripts\TalentScript.cs" />
     <Compile Include="Scripts\UITestScript.cs" />
     <Compile Include="Scripts\VendorScript.cs" />
+    <Compile Include="Scripts\_QKDrawScriptV3.cs" />
     <Compile Include="Scripts\_QKDrawLineScriptV2.cs" />
     <Compile Include="Scripts\_QKDrawLineScript.cs" />
     <Compile Include="Scripts\_QKPlayerTitleScript.cs" />
@@ -201,7 +247,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="DirectX\Gwen\Media\DefaultSkin.png" />
     <None Include="DirectX\Squid\Content\border.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -391,6 +437,8 @@
     <None Include="Resources\Icons\report.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DirectX\Gwen\DefaultSkin.png" />
+    <Content Include="DirectX\Gwen\Gwen.UnitTest\Gwen.UnitTest.csproj" />
     <Content Include="DirectX\Squid\Content\Cursors\Arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -443,6 +491,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

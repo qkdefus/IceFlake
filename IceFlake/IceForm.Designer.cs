@@ -63,6 +63,7 @@
             this.tbLUA = new System.Windows.Forms.TextBox();
             this.btnSpellCast = new System.Windows.Forms.Button();
             this.GUITimer = new System.Windows.Forms.Timer(this.components);
+            this.buttonGwen = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabScripts.SuspendLayout();
             this.tabStatus.SuspendLayout();
@@ -368,6 +369,7 @@
             // 
             // tabDebug
             // 
+            this.tabDebug.Controls.Add(this.buttonGwen);
             this.tabDebug.Controls.Add(this.button1);
             this.tabDebug.Controls.Add(this.btnLoSTest);
             this.tabDebug.Controls.Add(this.btnExecute);
@@ -434,6 +436,16 @@
             this.GUITimer.Interval = 500;
             this.GUITimer.Tick += new System.EventHandler(this.GUITimer_Tick);
             // 
+            // buttonGwen
+            // 
+            this.buttonGwen.Location = new System.Drawing.Point(262, 8);
+            this.buttonGwen.Name = "buttonGwen";
+            this.buttonGwen.Size = new System.Drawing.Size(83, 51);
+            this.buttonGwen.TabIndex = 4;
+            this.buttonGwen.Text = "Gwen";
+            this.buttonGwen.UseVisualStyleBackColor = true;
+            this.buttonGwen.Click += new System.EventHandler(this.buttonGwen_Click);
+            // 
             // IceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -499,6 +511,7 @@
         private System.Windows.Forms.Button btnGenPath;
         private System.Windows.Forms.Button btnLoSTest;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonGwen;
     }
 }
 

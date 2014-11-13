@@ -24,6 +24,9 @@ namespace SquidSlimDX
         public InputManager(Game game)
             : base(game)
         {
+
+            
+            /*/
             SpecialKeys.Add(System.Windows.Forms.Keys.Home, 0xC7);
             SpecialKeys.Add(System.Windows.Forms.Keys.Up, 0xC8);
             SpecialKeys.Add(System.Windows.Forms.Keys.Left, 0xCB);
@@ -33,12 +36,15 @@ namespace SquidSlimDX
             SpecialKeys.Add(System.Windows.Forms.Keys.Insert, 0xD2);
             SpecialKeys.Add(System.Windows.Forms.Keys.Delete, 0xD3);
             SpecialKeys.Add(System.Windows.Forms.Keys.MediaPreviousTrack, 0x90);
-            
-            Device.RegisterDevice(UsagePage.Generic, UsageId.Keyboard, DeviceFlags.None);
+            /*/
+
+            //Device.RegisterDevice(UsagePage.Generic, UsageId.Keyboard, DeviceFlags.None);
             Device.RegisterDevice(UsagePage.Generic, UsageId.Mouse, DeviceFlags.None);
 
-            Device.KeyboardInput += new EventHandler<KeyboardInputEventArgs>(Device_KeyboardInput);
+            //Device.KeyboardInput += new EventHandler<KeyboardInputEventArgs>(Device_KeyboardInput);
             Device.MouseInput += new EventHandler<MouseInputEventArgs>(Device_MouseInput);
+
+            
         }
 
         void Device_MouseInput(object sender, MouseInputEventArgs e)
@@ -62,6 +68,7 @@ namespace SquidSlimDX
                     Buttons[1] = false;
                     break;
             }
+
         }
 
         void Device_KeyboardInput(object sender, KeyboardInputEventArgs e)
@@ -88,8 +95,10 @@ namespace SquidSlimDX
 
             Buffer.Clear();
 
-            System.Drawing.Point p = Game.Form.PointToClient(System.Windows.Forms.Cursor.Position);
+            //System.Drawing.Point p = Game.Form.PointToClient(System.Windows.Forms.Cursor.Position);
             //System.Drawing.Point p = new System.Drawing.Point(100, 100);
+
+            System.Drawing.Point p = new System.Drawing.Point(100, 100);
 
             GuiHost.SetMouse(p.X, p.Y, Wheel);
             GuiHost.SetButtons(Buttons);

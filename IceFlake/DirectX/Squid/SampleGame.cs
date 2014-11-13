@@ -11,8 +11,8 @@ namespace SquidSlimDX
         {
             GuiHost.Renderer = new RendererSlimDX(D3D.Device);
 
-            //InputManager input = new InputManager(this);
-            //Components.Add(input);
+            InputManager input = new InputManager(this);
+            Components.Add(input);
 
             SampleScene scene = new SampleScene(this);
             Components.Add(scene);
