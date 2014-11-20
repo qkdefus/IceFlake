@@ -98,6 +98,7 @@
     <Compile Include="Client\API\TradeSkill.cs" />
     <Compile Include="Client\API\Trainer.cs" />
     <Compile Include="Client\CDataStore.cs" />
+    <Compile Include="Client\Memory.cs" />
     <Compile Include="Client\Routines\Combat\HarmfulSpellRoutine.cs" />
     <Compile Include="Client\Routines\Combat\HelpfulSpellRoutine.cs" />
     <Compile Include="Client\Routines\Combat\SpellRoutine.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Scripts\_QKDrawScriptV3.cs" />
     <Compile Include="Scripts\_QKDrawLineScriptV2.cs" />
     <Compile Include="Scripts\_QKDrawLineScript.cs" />
+    <Compile Include="Scripts\_QKFailHPScript.cs" />
     <Compile Include="Scripts\_QKPlayerTitleScript.cs" />
     <Compile Include="Scripts\_QKCooldDownScript.cs" />
     <Compile Include="Scripts\_QKDrawMenuBasic.cs" />

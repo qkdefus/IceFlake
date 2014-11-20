@@ -76,5 +76,12 @@ namespace IceFlake
         {
             EntryPoint.AppForm.Invoke(action);
         }
+
+        public static string ConvertToHexString(uint value)
+        {
+            System.Text.StringBuilder builder = new System.Text.StringBuilder("0x");
+            builder.Append(Convert.ToString(value, 16).ToUpper());
+            return builder.ToString();
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace IceFlake.Client.Objects
             {
                 Log.WriteLine("LocalPlayer:");
 
-                Log.WriteLine("\tPointer {0}", pointer);
+                Log.WriteLine("\tPointer {0}", Manager.ConvertToHexString((uint)pointer));
 
                 Log.WriteLine("\tLevel {0} {1} {2}", Level, Race, Class);
                 Log.WriteLine("\tHealth: {0}/{1} ({2}%)", Health, MaxHealth, (int) HealthPercentage);

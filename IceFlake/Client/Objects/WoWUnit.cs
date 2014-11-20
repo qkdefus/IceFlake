@@ -60,6 +60,11 @@ namespace IceFlake.Client.Objects
             _auras = new AuraCollection(this);
         }
 
+        public uint ObjEnd
+        {
+            get { return GetDescriptor<uint>(WoWUnitFields.UNIT_FIELD_CHARM); }
+        }
+
         /// <summary>
         /// Returns the object's Rotation.
         /// </summary>

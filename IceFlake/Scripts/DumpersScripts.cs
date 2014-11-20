@@ -54,6 +54,8 @@ namespace IceFlake.Scripts
             foreach (WoWPlayer p in Manager.ObjectManager.Objects.Where(x => x.IsPlayer).Cast<WoWPlayer>())
             {
                 Print("-- {0}", p.Name);
+                Print("-- {0}", Client.Memory.ConvertToHexString((uint)p.Pointer));
+
                 Print("\tGUID: 0x{0}", p.Guid.ToString("X8"));
                 Print("\tLevel {0} {1} {2}", p.Level, p.Race, p.Class);
                 Print("\tHealth: {0}/{1} ({2}%)", p.Health, p.MaxHealth, (int) p.HealthPercentage);
@@ -84,6 +86,8 @@ namespace IceFlake.Scripts
             foreach (WoWPlayer p in WoWParty.Members)
             {
                 Print("-- {0}", p.Name);
+                //Print("-- {0}", Client.Memory.ConvertToHexString((uint)p.Pointer));
+
                 Print("\tGUID: 0x{0}", p.Guid.ToString("X8"));
                 Print("\tLevel {0} {1} {2}", p.Level, p.Race, p.Class);
                 Print("\tHealth: {0}/{1} ({2}%)", p.Health, p.MaxHealth, (int) p.HealthPercentage);

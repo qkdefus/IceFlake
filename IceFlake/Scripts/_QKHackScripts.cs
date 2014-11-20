@@ -15,28 +15,65 @@ namespace IceFlake.Scripts
     // world clock speed 0x00D37FC8
     // disable spellcasting 00807D1E
 
+    // disable display of my target to others 0x518e07
+    // show all lvls (oposite faction) 0x0060FA88
+
+    // disable player textures 0x873480 -> change push to return
+    // disable terrain noclip 0x7D8840 -> change push to return
+
+    // follow all (npc)
+    // 0072B52C - 75 18                 - jne 0072B546
+    // change to 
+    // 0072B52C - 74 18                 - je 0072B546
+
+    // follow range
+    // breakpoint this address
+    // 00715C8C - D8 9E BCAAAD00        - fcomp dword ptr [esi+00ADAABC]
+    // find out what esi value is (esi = 24)
+    // 00ADAABC + 24 = range value offset -> write 0 as value and it will prevent follow range check
+
+    // interact while dead 0x6dac2b
+   
+    // talk while dead // qk // 335a
+    // 0050D641 - 74 52                 - je 0050D695
+    // change to 
+    // 0050D641 - EB 52                 - jmp 0050D695
+
+    // CGGameUI__CloseLoot = 0x004D4B30 - 4.3.4.15595
+    // CGGameUI__CloseLoot = 0x006B5A71 - 335a // qk
+
+    
 
     public class QKSpeedHackScriptV1: Script
     {
         public QKSpeedHackScriptV1()
-            : base("Hack", "_QKSpeedHack V1")
+            : base("Hack", "_QKSpeedHack xx")
         { }
+
+        // default bytes
+        // 006F14A8 - 85 C0                 - test eax,eax
+        // 006F14AA - 7E 62                 - jle 006F150E
 
         private readonly IntPtr POINTER = new IntPtr(0x6F14A8);
         private const uint START_SPEED = 0x9000E6C1;
-        private const uint SPEED_MODIFIER = 5; // Max 5
+        private const uint SPEED_MODIFIER = 10;
 
         // default         // 1652473989
-        // 1x = 0x9000e6c1 // 2415978177
-        // 2x = 0x9001f6c1 // 2416047809
-        // 5x = 0x9002f6c1 // 2416113345
+        // 0x = 0x9000e6c1 // 2415978177
+        // 1x = 0x9001f6c1 // 2416047809
+        // 2x = 0x9002f6c1 // 2416113345
+        // 3x = 0x9003F6C1 //
+        //10x = 0x900AF6C1 //
+ 
+        // can write any weird values at 0x90??F6C1 
+        // why cant i write default bytes back is beyond me, lol
 
         public override void OnStart()
         {
             if (!Manager.ObjectManager.IsInGame)
                 return;
 
-            // 006F14A8 - 85 C0                 - test eax,eax
+            Log.WriteLine("" + Manager.ConvertToHexString(START_SPEED + ((0x10000 * SPEED_MODIFIER) + 0x1000)));
             Manager.Memory.WriteBytes(POINTER, BitConverter.GetBytes(START_SPEED));
             Manager.Memory.WriteBytes(POINTER, BitConverter.GetBytes(START_SPEED + ((0x10000 * SPEED_MODIFIER) + 0x1000)));
             Print("Applying speed hack");
@@ -107,7 +144,7 @@ namespace IceFlake.Scripts
 
         public override void OnTick()
         {
-            DEFAULT_VALUE = Manager.Memory.Read<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x814));
+            //DEFAULT_VALUE = Manager.Memory.Read<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x814));
             Manager.Memory.Write<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x814), SPEED_MODIFIER);
         }
 
@@ -136,8 +173,7 @@ namespace IceFlake.Scripts
                 return;
 
             Print("Applying speed hack");
-
-            DEFAULT_VALUE = Manager.Memory.Read<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C));
+            //DEFAULT_VALUE = Manager.Memory.Read<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C));
             Manager.Memory.Write<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C), SPEED_MODIFIER);
         }
 
@@ -149,7 +185,6 @@ namespace IceFlake.Scripts
         public override void OnTerminate()
         {
             Print("Removing speed hack");
-
             Manager.Memory.Write<float>(new IntPtr((uint)Manager.LocalPlayer.Pointer + 0x81C), DEFAULT_VALUE);
         }
     }
