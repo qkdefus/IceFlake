@@ -11,6 +11,21 @@
     <AssemblyName>IceFlake</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,6 +55,17 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Office.v13.2.Core, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v13.2.Core, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v13.2.Core, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraRichEdit.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v13.2.Extensions, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="Gwen">
       <HintPath>..\Resources\Gwen.dll</HintPath>
     </Reference>
@@ -170,6 +196,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DirectX\IPulsable.cs" />
+    <Compile Include="DirectX\Rendering\Geometry\DisposablePattern.cs" />
+    <Compile Include="DirectX\Rendering\Primitives\TexturedVertex.cs" />
     <Compile Include="DirectX\Squid\Framework\Game.cs" />
     <Compile Include="DirectX\Squid\Framework\GameComponent.cs" />
     <Compile Include="DirectX\Squid\Framework\GameTime.cs" />
@@ -200,45 +228,50 @@
     <Compile Include="Manager.cs" />
     <Compile Include="DirectX\Direct3D.cs" />
     <Compile Include="FileLogger.cs" />
-    <Compile Include="IceForm.cs">
+    <Compile Include="Forms\IceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IceForm.Designer.cs">
+    <Compile Include="Forms\IceForm.Designer.cs">
       <DependentUpon>IceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\Extensions.cs" />
-    <Compile Include="Scripts\ChatScript.cs" />
-    <Compile Include="Scripts\ConsoleScript.cs" />
-    <Compile Include="Scripts\DebugScript.cs" />
-    <Compile Include="Scripts\PacketScript.cs" />
-    <Compile Include="Scripts\QuestHelperScript.cs" />
-    <Compile Include="Scripts\RenderingScripts.cs" />
-    <Compile Include="Scripts\DumpersScripts.cs" />
-    <Compile Include="Scripts\FishingScript.cs" />
-    <Compile Include="Scripts\GuildRecruitScript.cs" />
-    <Compile Include="Scripts\LoginScript.cs" />
-    <Compile Include="Scripts\RoutineScript.cs" />
-    <Compile Include="Scripts\TalentScript.cs" />
-    <Compile Include="Scripts\UITestScript.cs" />
-    <Compile Include="Scripts\VendorScript.cs" />
-    <Compile Include="Scripts\_QKDrawScriptV3.cs" />
-    <Compile Include="Scripts\_QKDrawLineScriptV2.cs" />
-    <Compile Include="Scripts\_QKDrawLineScript.cs" />
-    <Compile Include="Scripts\_QKFailHPScript.cs" />
-    <Compile Include="Scripts\_QKPlayerTitleScript.cs" />
-    <Compile Include="Scripts\_QKCooldDownScript.cs" />
-    <Compile Include="Scripts\_QKDrawMenuBasic.cs" />
-    <Compile Include="Scripts\_QKDrawMenuSquid.cs" />
-    <Compile Include="Scripts\_QKHackScripts.cs" />
-    <Compile Include="Scripts\_QKTestScript.cs" />
-    <Compile Include="Scripts\_QKTestWarden.cs" />
-    <EmbeddedResource Include="IceForm.resx">
+    <Compile Include="Scripts\IceFlake Scripts\ChatScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\ConsoleScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\DebugScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\PacketScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\QuestHelperScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\RenderingScripts.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\DumpersScripts.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\FishingScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\GuildRecruitScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\LoginScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\RoutineScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\TalentScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\UITestScript.cs" />
+    <Compile Include="Scripts\IceFlake Scripts\VendorScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawMeshScriptV7.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawMeshScriptV6.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawMeshScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawScriptV3.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawLineScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Hacks\_QKFailHPScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Div\_QKMenuPluginSample.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Hacks\_QKPlayerFactionScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Hacks\_QKPlayerTitleScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Hacks\_QKCooldDownScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawMenuBasic.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Drawing\_QKDrawMenuSquid.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Hacks\_QKHackScripts.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Div\_QKTestScript.cs" />
+    <Compile Include="Scripts\IceQK Scripts\Div\_QKTestWarden.cs" />
+    <EmbeddedResource Include="Forms\IceForm.resx">
       <DependentUpon>IceForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -492,8 +525,38 @@
     <Content Include="DirectX\Squid\Content\weapon-icons.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\Textures\test.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="Resources\Forms\Menu_800x600.bmp" />
+    <None Include="Resources\Forms\Menu_290x460.bmp" />
+    <None Include="Resources\SettingsMenu.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DirectX\DirectX_OLD\DirectX_BAK - device release problem\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

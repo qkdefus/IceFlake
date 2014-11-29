@@ -2,14 +2,30 @@
 {
     internal static class Pointers
     {
+        internal enum Teleport // 335a
+        {
+            UnitMovementData                            = 0x006E6F13,
+            MovementDataPosition                        = 0x006E6F19,
+            //GlobalMovementHeartbeat = ;
+
+            OpcodeStart                                 = 0x00000000,
+            OpcodeStop                                  = 0x00000000,
+            SendMovementPacket                          = 0x00000000,
+            SendMoveSplineDone                          = 0x00000000,
+            Singleton                                   = 0x00000000,
+            CurMgrOffset                                = 0x00000000,
+            CurMgrGlobalMovement                        = 0x00000000,
+        }
+
+
         #region Nested type: DirectX
 
-        internal class DirectX
-        {
-            internal uint DirectXBase = 0xC5DF88;
-            internal uint Device = 0x397C;
-            internal uint EndScene = 0xA8;
-        }
+        //internal class DirectX
+        //{
+        //    internal uint DirectXBase = 0xC5DF88;
+        //    internal uint Device = 0x397C;
+        //    internal uint EndScene = 0xA8;
+        //}
 
         #endregion
 

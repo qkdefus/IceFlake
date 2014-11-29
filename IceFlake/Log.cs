@@ -79,6 +79,7 @@ namespace IceFlake
     {
         Error,
         Warning,
+        Critical,
         Normal,
         Information,
         Good,

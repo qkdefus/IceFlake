@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 using IceFlake.Runtime;
+
 
 namespace IceFlake.Client.Scripts
 {
     public abstract class Script
     {
-        public Script(string name, string category)
+        public Script(string name, string category, int tileColor = 0)
         {
             Name = name;
             Category = category;
             IsRunning = false;
             ThreadPool = new List<ScriptThread>();
             MainThread = null;
+            TileColor = tileColor;
         }
 
         public string Name { get; private set; }
 
         public string Category { get; private set; }
+
+        public Int32 TileColor { get; set; }
+
 
         public bool IsRunning { get; private set; }
 

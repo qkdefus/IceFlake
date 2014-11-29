@@ -42,7 +42,7 @@ namespace SquidSlimDX
             Device = device;
             Spritebatch = new Sprite(device);
 
-            BlankTexture = new Texture(D3D.Device, 8, 8, 0, Usage.None, Format.A8R8G8B8, Pool.Managed);
+            BlankTexture = new Texture(D3D.CurrDevice, 8, 8, 0, Usage.None, Format.A8R8G8B8, Pool.Managed);
             BlankTexture.Fill(new Fill2DCallback(delegate(SlimDX.Vector2 a, SlimDX.Vector2 b) { return new SlimDX.Color4(System.Drawing.Color.White); }));
 
             FontTypes.Add(Squid.Font.Default, new Squid.Font { Name = "Arial10", Family = "Arial", Size = 14, Bold = true, International = true });
@@ -197,22 +197,22 @@ namespace SquidSlimDX
         public void Scissor(int x, int y, int width, int height)
         {
             ScissorRect = new System.Drawing.Rectangle(x, y, width, height);
-            D3D.Device.SetRenderState(RenderState.ScissorTestEnable, true);
-            D3D.Device.ScissorRect = ScissorRect;
+            D3D.CurrDevice.SetRenderState(RenderState.ScissorTestEnable, true);
+            D3D.CurrDevice.ScissorRect = ScissorRect;
         }
 
         public void StartBatch()
         {
             Spritebatch.Begin(SpriteFlags.AlphaBlend | SpriteFlags.DoNotSaveState);
 
-            if (D3D.Device.TestCooperativeLevel().IsSuccess)
-                D3D.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.None);
+            if (D3D.CurrDevice.TestCooperativeLevel().IsSuccess)
+                D3D.CurrDevice.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.None);
         }
 
         public void EndBatch(bool final)
         {
-            D3D.Device.SetRenderState(RenderState.AlphaTestEnable, false);
-            D3D.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            D3D.CurrDevice.SetRenderState(RenderState.AlphaTestEnable, false);
+            D3D.CurrDevice.SetRenderState(RenderState.AlphaBlendEnable, true);
             Spritebatch.End();
         }
 

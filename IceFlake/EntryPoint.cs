@@ -11,8 +11,6 @@ namespace IceFlake
         [STAThread]
         public static void Main(string[] args)
         {
-
-
             FileLogger.Instance = new FileLogger();
             Log.WriteLine(LogType.Information, "Initializing IceFlake");
             Application.ApplicationExit += OnApplicationExit;
@@ -23,8 +21,6 @@ namespace IceFlake
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(AppForm = new IceForm());
-
-
         }
 
         private static void OnApplicationExit(object sender, EventArgs e)

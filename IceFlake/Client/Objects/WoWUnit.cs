@@ -141,10 +141,26 @@ namespace IceFlake.Client.Objects
             }
         }
 
+        
+        
+        /// <summary>
+        /// Return Unit MovementData // same as movementfield ?
+        /// </summary>
+        public uint MovementData
+        {
+            get
+            {
+                //return Manager.Memory.Read<uint>(new IntPtr((uint)Pointer + (uint)Pointers.Teleport.UnitMovementData));
+                return ((uint)Pointer + (uint)Pointers.Teleport.UnitMovementData);
+            }
+        }
 
 
-
-
+        public void SetLocation(Location newLoc)
+        {
+            var loc = new Location { X = newLoc.X, Y = newLoc.Y, Z = newLoc.Z };
+            Manager.Memory.Write<Location>(new IntPtr((uint)MovementField + (uint)Pointers.Teleport.MovementDataPosition), loc);
+        }
 
 
 

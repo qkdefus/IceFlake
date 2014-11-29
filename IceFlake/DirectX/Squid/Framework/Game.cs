@@ -102,7 +102,7 @@ namespace Framework
 
             //Device = new Device(new Direct3D(), 0, DeviceType.Hardware, Form.Handle, CreateFlags.HardwareVertexProcessing, Params);
 
-            Device = D3D.Device;
+            Device = D3D.CurrDevice;
         }
 
         //private void Application_Idle(object sender, EventArgs e)
